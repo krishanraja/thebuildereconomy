@@ -1,12 +1,38 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { NeuralMesh } from "@/components/NeuralMesh";
+import { Hero } from "@/components/Hero";
+import { About } from "@/components/About";
+import { FeaturedGuests } from "@/components/FeaturedGuests";
+import { Episodes } from "@/components/Episodes";
+import { Testimonials } from "@/components/Testimonials";
+import { Subscribe } from "@/components/Subscribe";
+import { WhoBuilds } from "@/components/WhoBuilds";
+import { Footer } from "@/components/Footer";
+import { GuestApplicationModal } from "@/components/GuestApplicationModal";
 
 const Index = () => {
+  const [applicationModalOpen, setApplicationModalOpen] = useState(false);
+
   return (
-    <div className="flex min-h-screen items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="mb-4 text-4xl font-bold">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen relative overflow-hidden">
+      <NeuralMesh />
+      
+      <main>
+        <Hero onApplyClick={() => setApplicationModalOpen(true)} />
+        <About />
+        <FeaturedGuests />
+        <Episodes />
+        <Testimonials />
+        <Subscribe />
+        <WhoBuilds />
+      </main>
+
+      <Footer />
+
+      <GuestApplicationModal
+        open={applicationModalOpen}
+        onOpenChange={setApplicationModalOpen}
+      />
     </div>
   );
 };
