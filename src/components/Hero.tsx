@@ -19,7 +19,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         transition={{ duration: 0.8, delay: 0.2 }}
       >
         <motion.div
-          className="mb-6"
+          className="mb-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
@@ -32,7 +32,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.div>
         
         <motion.p
-          className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto"
+          className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto -mt-4"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
