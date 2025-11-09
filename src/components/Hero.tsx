@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Music2, MessageSquare } from "lucide-react";
+import logo from "@/assets/logo.png";
 
 interface HeroProps {
   onApplyClick: () => void;
@@ -17,14 +18,18 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
       >
-        <motion.h1
-          className="text-6xl md:text-8xl font-bold mb-6 text-gradient"
+        <motion.div
+          className="mb-6"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          Welcome to The Builder Economy
-        </motion.h1>
+          <img 
+            src={logo} 
+            alt="The Builder Economy" 
+            className="w-full max-w-2xl mx-auto"
+          />
+        </motion.div>
         
         <motion.p
           className="text-xl md:text-2xl text-muted-foreground mb-12 max-w-3xl mx-auto"
