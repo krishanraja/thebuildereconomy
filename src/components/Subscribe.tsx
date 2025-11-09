@@ -43,6 +43,11 @@ export const Subscribe = () => {
           throw error;
         }
       } else {
+        // Trigger welcome email
+        await supabase.functions.invoke("send-welcome-email", {
+          body: { email },
+        });
+        
         toast({
           title: "Welcome to The Builder Circle! 🎉",
           description: "Check your email for a welcome message and top episodes.",

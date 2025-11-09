@@ -53,6 +53,11 @@ export const GuestApplicationModal = ({
 
       if (error) throw error;
 
+      // Trigger email notifications
+      await supabase.functions.invoke("notify-guest-application", {
+        body: formData,
+      });
+
       toast({
         title: "Application submitted! 🚀",
         description: "Thanks for applying. We'll review your pitch and be in touch soon.",
