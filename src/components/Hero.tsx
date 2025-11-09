@@ -9,11 +9,11 @@ interface HeroProps {
 
 export const Hero = ({ onApplyClick }: HeroProps) => {
   return (
-    <section className="relative min-h-[85vh] flex items-center justify-center px-4 overflow-hidden py-12">
+    <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div className="absolute inset-0 gradient-mesh" />
       
       <motion.div
-        className="relative z-10 text-center max-w-5xl mx-auto space-y-6"
+        className="relative z-10 text-center max-w-5xl mx-auto space-y-4"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -26,7 +26,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           <img 
             src={logo} 
             alt="The Builder Economy" 
-            className="w-full max-w-2xl mx-auto -mt-6"
+            className="w-full max-w-2xl mx-auto"
           />
         </motion.div>
         
@@ -40,7 +40,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.p>
         
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-2"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
