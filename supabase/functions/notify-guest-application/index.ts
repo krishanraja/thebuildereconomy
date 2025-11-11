@@ -33,7 +33,7 @@ const handler = async (req: Request): Promise<Response> => {
       },
       body: JSON.stringify({
         from: "The Builder Economy <onboarding@resend.dev>",
-        to: ["krish@thebuildereconomy.com"],
+        to: ["krish@themindmaker.ai"],
         subject: "🎙️ New Guest Application — The Builder Economy",
         html: `
           <h2>New Guest Application Received</h2>
