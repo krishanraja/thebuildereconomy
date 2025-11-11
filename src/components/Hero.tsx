@@ -41,7 +41,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Conversations with the pioneers building the next era of intelligence
+          Conversations to inspire a new era where everyone builds with AI.
         </motion.p>
         
         <motion.div
