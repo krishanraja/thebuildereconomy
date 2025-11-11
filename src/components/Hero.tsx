@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Music2, MessageSquare } from "lucide-react";
 import logo from "@/assets/logo.png";
+import heroBackground from "@/assets/hero-background.gif";
 
 interface HeroProps {
   onApplyClick: () => void;
@@ -11,6 +12,10 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div className="absolute inset-0 gradient-mesh" />
+      <div 
+        className="absolute inset-0 bg-cover bg-center opacity-20"
+        style={{ backgroundImage: `url(${heroBackground})` }}
+      />
       
       <motion.div
         className="relative z-10 text-center max-w-2xl mx-auto space-y-2"
