@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { NeuralMesh } from "@/components/NeuralMesh";
+import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { About } from "@/components/About";
 import { FeaturedGuests } from "@/components/FeaturedGuests";
@@ -16,6 +17,7 @@ const Index = () => {
   return (
     <div className="min-h-screen relative overflow-hidden">
       <NeuralMesh />
+      <Header />
       
       <main>
         <Hero onApplyClick={() => setApplicationModalOpen(true)} />
