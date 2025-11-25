@@ -55,13 +55,15 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
-                <Button
-                  size="lg"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect px-8 py-6 text-lg"
-                >
-                  <Music2 className="mr-2 h-5 w-5" />
-                  Listen on Spotify
-                </Button>
+                <span className="inline-block">
+                  <Button
+                    size="lg"
+                    className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect px-8 py-6 text-lg pointer-events-none opacity-90"
+                  >
+                    <Music2 className="mr-2 h-5 w-5" />
+                    Listen on Spotify
+                  </Button>
+                </span>
               </TooltipTrigger>
               <TooltipContent>
                 <p>Coming Soon</p>
