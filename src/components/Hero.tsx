@@ -18,7 +18,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
       />
       
       <motion.div
-        className="relative z-10 text-center max-w-2xl mx-auto space-y-2"
+        className="relative z-10 text-center max-w-4xl mx-auto space-y-6"
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.8, delay: 0.2 }}
@@ -36,7 +36,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.div>
         
         <motion.p
-          className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto"
+          className="text-2xl md:text-4xl font-light text-foreground max-w-3xl mx-auto tracking-wide leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
