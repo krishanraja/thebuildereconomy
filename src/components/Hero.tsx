@@ -36,7 +36,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.div>
         
         <motion.p
-          className="text-sm md:text-base text-muted-foreground max-w-xl mx-auto"
+          className="text-lg md:text-xl text-muted-foreground max-w-xl mx-auto"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -45,25 +45,27 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.p>
         
         <motion.div
-          className="flex flex-col sm:flex-row gap-2 justify-center items-center pt-1"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-4"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
           <Button
-            className="bg-primary hover:bg-primary/90 glow-effect px-4 py-2"
+            size="lg"
+            className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect px-8 py-6 text-lg"
             onClick={() => window.open("https://open.spotify.com", "_blank")}
           >
-            <Music2 className="mr-2 h-4 w-4" />
+            <Music2 className="mr-2 h-5 w-5" />
             Listen on Spotify
           </Button>
           
           <Button
+            size="lg"
             variant="outline"
-            className="border-primary text-primary hover:bg-primary/10 px-4 py-2"
+            className="border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground px-8 py-6 text-lg"
             onClick={onApplyClick}
           >
-            <MessageSquare className="mr-2 h-4 w-4" />
+            <MessageSquare className="mr-2 h-5 w-5" />
             Apply to Be a Guest
           </Button>
         </motion.div>
