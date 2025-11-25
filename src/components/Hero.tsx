@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Music2, MessageSquare } from "lucide-react";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "./ui/tooltip";
 import logo from "@/assets/logo.png";
 import heroBackground from "@/assets/hero-background.gif";
 
@@ -51,15 +52,22 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
         >
-          <Button
-            size="lg"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect px-8 py-6 text-lg cursor-not-allowed"
-            title="Coming Soon"
-            disabled
-          >
-            <Music2 className="mr-2 h-5 w-5" />
-            Listen on Spotify
-          </Button>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger asChild>
+                <Button
+                  size="lg"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect px-8 py-6 text-lg"
+                >
+                  <Music2 className="mr-2 h-5 w-5" />
+                  Listen on Spotify
+                </Button>
+              </TooltipTrigger>
+              <TooltipContent>
+                <p>Coming Soon</p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
           
           <Button
             size="lg"
