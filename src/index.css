@@ -8,45 +8,45 @@ All colors MUST be HSL.
 
 @layer base {
   :root {
-    /* Dark gradient theme: black → indigo → deep violet */
-    --background: 240 10% 8%;
-    --foreground: 210 40% 98%;
+    /* Ink blue and mint green theme */
+    --background: 212 51% 11%;
+    --foreground: 155 85% 95%;
 
-    --card: 240 8% 12%;
-    --card-foreground: 210 40% 98%;
+    --card: 212 45% 15%;
+    --card-foreground: 155 85% 95%;
 
-    --popover: 240 8% 12%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 212 45% 15%;
+    --popover-foreground: 155 85% 95%;
 
-    --primary: 263 70% 60%;
-    --primary-foreground: 210 40% 98%;
+    --primary: 155 85% 73%;
+    --primary-foreground: 212 51% 11%;
 
-    --secondary: 240 15% 18%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 212 51% 11%;
+    --secondary-foreground: 155 85% 95%;
 
-    --muted: 240 10% 15%;
-    --muted-foreground: 215 20% 65%;
+    --muted: 212 40% 20%;
+    --muted-foreground: 155 40% 70%;
 
-    --accent: 263 80% 65%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 155 85% 73%;
+    --accent-foreground: 212 51% 11%;
 
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 210 40% 98%;
 
-    --border: 240 15% 20%;
-    --input: 240 15% 20%;
-    --ring: 263 70% 60%;
+    --border: 212 30% 25%;
+    --input: 212 30% 25%;
+    --ring: 155 85% 73%;
 
     --radius: 0.75rem;
 
     /* Neural mesh and gradient colors */
-    --gradient-start: 240 10% 5%;
-    --gradient-mid: 263 50% 15%;
-    --gradient-end: 280 60% 20%;
+    --gradient-start: 212 51% 8%;
+    --gradient-mid: 212 45% 15%;
+    --gradient-end: 155 50% 20%;
     
     /* Glow effects */
-    --glow-primary: 263 70% 60%;
-    --glow-secondary: 280 70% 50%;
+    --glow-primary: 155 85% 73%;
+    --glow-secondary: 155 70% 60%;
   }
 }
 

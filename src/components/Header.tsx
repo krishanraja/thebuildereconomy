@@ -6,7 +6,7 @@ export const Header = () => {
       <img 
         src={mindmakerLogo} 
         alt="Mindmaker" 
-        className="h-8 w-auto opacity-90"
+        className="h-32 w-auto opacity-90"
       />
     </header>
   );
