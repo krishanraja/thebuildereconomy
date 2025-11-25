@@ -53,8 +53,9 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         >
           <Button
             size="lg"
-            className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect px-8 py-6 text-lg"
-            onClick={() => window.open("https://open.spotify.com", "_blank")}
+            className="bg-primary hover:bg-primary/90 text-primary-foreground glow-effect px-8 py-6 text-lg cursor-not-allowed"
+            title="Coming Soon"
+            disabled
           >
             <Music2 className="mr-2 h-5 w-5" />
             Listen on Spotify
