@@ -13,7 +13,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div className="absolute inset-0 gradient-mesh" />
       <div 
-        className="absolute inset-0 bg-cover bg-center opacity-20"
+        className="absolute inset-0 bg-cover bg-center opacity-40"
         style={{ backgroundImage: `url(${heroBackground})` }}
       />
       
