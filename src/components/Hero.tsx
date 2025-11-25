@@ -36,8 +36,8 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.div>
         
         <motion.p
-          className="-mt-4 text-2xl md:text-4xl font-light text-gradient max-w-3xl mx-auto tracking-wider leading-relaxed"
-          style={{ textShadow: '0 2px 20px hsl(var(--glow-primary) / 0.2)' }}
+          className="-mt-4 mb-4 text-2xl md:text-3xl font-semibold text-gradient max-w-3xl mx-auto tracking-wider leading-tight"
+          style={{ textShadow: '0 2px 20px hsl(var(--glow-primary) / 0.2)', lineHeight: '1.2' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
@@ -46,7 +46,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.p>
         
         <motion.div
-          className="flex flex-col sm:flex-row gap-4 justify-center items-center pt-8"
+          className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.8 }}
