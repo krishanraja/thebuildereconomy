@@ -36,13 +36,13 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.div>
         
         <motion.p
-          className="-mt-4 mb-4 text-2xl md:text-3xl font-semibold text-gradient max-w-3xl mx-auto tracking-wider leading-tight"
+          className="-mt-4 mb-4 text-xl md:text-3xl font-semibold text-gradient max-w-3xl mx-auto tracking-wider leading-tight"
           style={{ textShadow: '0 2px 20px hsl(var(--glow-primary) / 0.2)', lineHeight: '1.2' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          Conversations to inspire a new era<br />where everyone builds with AI.
+          Conversations to inspire a new era where everyone builds with AI.
         </motion.p>
         
         <motion.div
