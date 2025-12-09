@@ -34,10 +34,10 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-          <img 
+        <img 
             src={logo} 
             alt="The Builder Economy" 
-            className="w-full max-w-4xl mx-auto"
+            className="w-full max-w-[280px] md:max-w-[45rem] mx-auto"
           />
         </motion.div>
         
