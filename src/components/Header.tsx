@@ -1,3 +1,9 @@
+/**
+ * @file Header.tsx
+ * @description Fixed header with Mindmaker logo. Fades on scroll.
+ * @dependencies mindmaker-logo asset
+ */
+
 import { useEffect, useState } from "react";
 import mindmakerLogo from "@/assets/mindmaker-logo.png";
 

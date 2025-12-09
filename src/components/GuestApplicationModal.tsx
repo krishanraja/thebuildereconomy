@@ -1,3 +1,9 @@
+/**
+ * @file GuestApplicationModal.tsx
+ * @description Modal form for guest applications. Inserts to guest_applications table and triggers notification emails.
+ * @dependencies supabase, Dialog, notify-guest-application edge function
+ */
+
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";

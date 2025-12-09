@@ -1,73 +1,155 @@
-# Welcome to your Lovable project
+# The Builder Economy
 
-## Project info
+> Conversations to inspire a new era where everyone builds with AI.
 
-**URL**: https://lovable.dev/projects/dc395342-a01e-4785-9d96-8010ab301bf4
+A podcast landing page and community platform featuring guest applications, newsletter subscriptions, and episode showcases.
 
-## How can I edit this code?
+---
 
-There are several ways of editing your application.
+## Features
 
-**Use Lovable**
+- **Hero Section**: Branded landing with podcast logo and CTAs
+- **Guest Applications**: Submit applications to be a podcast guest
+- **Newsletter Subscription**: Join The Builder Circle for updates
+- **Featured Guests**: Showcase previous podcast guests
+- **Episodes**: Display podcast episodes
+- **Testimonials**: Community testimonials
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/dc395342-a01e-4785-9d96-8010ab301bf4) and start prompting.
+---
 
-Changes made via Lovable will be committed automatically to this repo.
+## Tech Stack
 
-**Use your preferred IDE**
+| Layer | Technology |
+|-------|------------|
+| Frontend | React 18, TypeScript, Vite |
+| Styling | Tailwind CSS, shadcn/ui |
+| Animations | Framer Motion |
+| Backend | Lovable Cloud (Supabase) |
+| Database | PostgreSQL |
+| Edge Functions | Deno |
+| Email | Resend |
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+---
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+## Project Structure
 
-Follow these steps:
+```
+/src
+  /components      # UI components
+  /lib             # Utilities (logger, config, animations)
+  /hooks           # Custom React hooks
+  /types           # TypeScript type definitions
+  /pages           # Route pages
+  /integrations    # Supabase client
+  /assets          # Static assets (images, logos)
+/supabase
+  /functions       # Edge functions
+  /migrations      # Database migrations
+/docs              # Documentation
+  MASTER_INSTRUCTIONS.md
+  PROJECT_NOTES.md
+  ARCHITECTURE.md
+  DESIGN_SYSTEM.md
+/public            # Public static files
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
+---
+
+## Getting Started
+
+### Prerequisites
+- Node.js 18+
+- npm or bun
+
+### Installation
+
+```bash
+# Clone the repository
 git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
 cd <YOUR_PROJECT_NAME>
 
-# Step 3: Install the necessary dependencies.
-npm i
+# Install dependencies
+npm install
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+### Environment Variables
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+The following are auto-configured by Lovable Cloud:
+- `VITE_SUPABASE_URL` - Supabase project URL
+- `VITE_SUPABASE_PUBLISHABLE_KEY` - Supabase anon key
 
-**Use GitHub Codespaces**
+Edge function secrets (configure in Lovable Cloud):
+- `RESEND_API_KEY` - Resend email API key
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+---
 
-## What technologies are used for this project?
+## Database Schema
 
-This project is built with:
+### Tables
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+| Table | Purpose |
+|-------|---------|
+| `subscribers` | Newsletter email signups |
+| `guest_applications` | Guest application submissions |
+| `episodes` | Podcast episode data |
+| `guests` | Featured guest profiles |
+| `testimonials` | Community testimonials |
 
-## How can I deploy this project?
+All tables have RLS enabled. See `docs/ARCHITECTURE.md` for full schema.
 
-Simply open [Lovable](https://lovable.dev/projects/dc395342-a01e-4785-9d96-8010ab301bf4) and click on Share -> Publish.
+---
 
-## Can I connect a custom domain to my Lovable project?
+## Edge Functions
 
-Yes, you can!
+| Function | Trigger | Purpose |
+|----------|---------|---------|
+| `send-welcome-email` | Subscriber signup | Sends welcome email |
+| `notify-guest-application` | Application submit | Notifies admin + auto-replies |
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+---
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/features/custom-domain#custom-domain)
+## Documentation
+
+- [Master Instructions](docs/MASTER_INSTRUCTIONS.md) - Development guidelines
+- [Project Notes](docs/PROJECT_NOTES.md) - Running decisions log
+- [Architecture](docs/ARCHITECTURE.md) - System architecture
+- [Design System](docs/DESIGN_SYSTEM.md) - Brand tokens and UI guidelines
+
+---
+
+## Development
+
+### Key Files
+
+- `src/index.css` - Design tokens (colors, gradients)
+- `tailwind.config.ts` - Tailwind configuration
+- `src/lib/logger.ts` - Structured logging utility
+- `src/lib/config.ts` - Centralized configuration
+- `src/lib/animations.ts` - Framer Motion variants
+- `src/types/index.ts` - TypeScript types
+
+### Logging
+
+```typescript
+import { logger } from '@/lib/logger';
+
+logger.info('User action', { userId: '123', action: 'click' });
+logger.error('Failed to submit', { error: err.message });
+```
+
+---
+
+## Deployment
+
+Deploy via Lovable:
+1. Open [Lovable Project](https://lovable.dev/projects/dc395342-a01e-4785-9d96-8010ab301bf4)
+2. Click Share → Publish
+
+---
+
+## License
+
+Private project. All rights reserved.

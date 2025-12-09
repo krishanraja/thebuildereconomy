@@ -1,3 +1,10 @@
+/**
+ * @file send-welcome-email/index.ts
+ * @description Edge function to send welcome email to new subscribers via Resend API.
+ * @trigger Called from Subscribe.tsx after successful subscriber insert.
+ * @requires RESEND_API_KEY secret
+ */
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
 const corsHeaders = {

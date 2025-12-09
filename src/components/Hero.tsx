@@ -1,3 +1,9 @@
+/**
+ * @file Hero.tsx
+ * @description Main hero section with podcast branding, tagline, and CTAs.
+ * @dependencies framer-motion, Button, logo assets
+ */
+
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { Music2, MessageSquare } from "lucide-react";
