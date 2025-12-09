@@ -113,7 +113,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "The Builder Economy <onboarding@resend.dev>",
+        from: "The Builder Economy <krish@themindmaker.ai>",
         to: ["krish@themindmaker.ai"],
         subject: "🎙️ New Guest Application — The Builder Economy",
         html: `
@@ -144,7 +144,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "Krish Raja <onboarding@resend.dev>",
+        from: "Krish Raja <krish@themindmaker.ai>",
         to: [application.email],
         subject: "Thanks for applying to The Builder Economy 🚀",
         html: `

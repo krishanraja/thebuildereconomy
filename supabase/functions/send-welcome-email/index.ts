@@ -104,7 +104,7 @@ const handler = async (req: Request): Promise<Response> => {
         "Content-Type": "application/json",
       },
       body: JSON.stringify({
-        from: "The Builder Economy <onboarding@resend.dev>",
+        from: "The Builder Economy <krish@themindmaker.ai>",
         to: [subscriber.email],
         subject: "Welcome to The Builder Circle 🎉",
         html: `
