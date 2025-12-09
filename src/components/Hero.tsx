@@ -34,15 +34,15 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
         >
-        <img 
+          <img 
             src={logo} 
             alt="The Builder Economy" 
-            className="w-full max-w-[280px] md:max-w-[45rem] mx-auto"
+            className="w-full max-w-[240px] md:max-w-[38rem] mx-auto"
           />
         </motion.div>
         
         <motion.p
-          className="-mt-4 mb-4 text-lg md:text-3xl font-semibold text-gradient max-w-3xl mx-auto tracking-wider leading-tight"
+          className="-mt-8 mb-2 text-lg md:text-2xl font-bold text-gradient max-w-3xl mx-auto tracking-normal leading-tight"
           style={{ textShadow: '0 2px 20px hsl(var(--glow-primary) / 0.2)', lineHeight: '1.2' }}
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
