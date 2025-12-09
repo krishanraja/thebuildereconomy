@@ -1,17 +1,23 @@
 /**
  * @file Subscribe.tsx
  * @description Newsletter subscription form. Inserts to subscribers table and triggers welcome email.
- * @dependencies supabase, framer-motion, send-welcome-email edge function
+ * @dependencies supabase, framer-motion, send-welcome-email edge function, zod
  */
 
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
+import { z } from "zod";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "./ui/button";
 import { Input } from "./ui/input";
 import { useToast } from "@/hooks/use-toast";
 import { Mail } from "lucide-react";
+
+// Client-side validation schema
+const subscribeSchema = z.object({
+  email: z.string().trim().email("Please enter a valid email address").max(255, "Email is too long"),
+});
 
 export const Subscribe = () => {
   const ref = useRef(null);
@@ -23,10 +29,12 @@ export const Subscribe = () => {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!email) {
+    // Client-side validation
+    const validation = subscribeSchema.safeParse({ email });
+    if (!validation.success) {
       toast({
-        title: "Email required",
-        description: "Please enter your email address",
+        title: "Invalid email",
+        description: validation.error.errors[0]?.message || "Please enter a valid email",
         variant: "destructive",
       });
       return;
@@ -37,7 +45,7 @@ export const Subscribe = () => {
     try {
       const { error } = await supabase
         .from("subscribers")
-        .insert({ email });
+        .insert({ email: validation.data.email });
 
       if (error) {
         if (error.code === "23505") {
@@ -50,9 +58,13 @@ export const Subscribe = () => {
         }
       } else {
         // Trigger welcome email
-        await supabase.functions.invoke("send-welcome-email", {
-          body: { email },
+        const { error: fnError } = await supabase.functions.invoke("send-welcome-email", {
+          body: { email: validation.data.email },
         });
+        
+        if (fnError) {
+          console.error("Welcome email error:", fnError);
+        }
         
         toast({
           title: "Welcome to The Builder Circle! 🎉",
@@ -61,6 +73,7 @@ export const Subscribe = () => {
         setEmail("");
       }
     } catch (error: any) {
+      console.error("Subscribe error:", error);
       toast({
         title: "Error",
         description: error.message || "Failed to subscribe. Please try again.",

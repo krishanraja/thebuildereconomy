@@ -1,1 +1,7 @@
 project_id = "eanxwzgbqqyjqplkalnl"
+
+[functions.notify-guest-application]
+verify_jwt = false
+
+[functions.send-welcome-email]
+verify_jwt = false
