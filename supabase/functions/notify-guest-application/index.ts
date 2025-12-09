@@ -1,3 +1,10 @@
+/**
+ * @file notify-guest-application/index.ts
+ * @description Edge function to notify admin of new guest applications and send auto-reply to applicant.
+ * @trigger Called from GuestApplicationModal.tsx after successful application insert.
+ * @requires RESEND_API_KEY secret
+ */
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 
 const corsHeaders = {

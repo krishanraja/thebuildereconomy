@@ -1,3 +1,9 @@
+/**
+ * @file Subscribe.tsx
+ * @description Newsletter subscription form. Inserts to subscribers table and triggers welcome email.
+ * @dependencies supabase, framer-motion, send-welcome-email edge function
+ */
+
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef, useState } from "react";
