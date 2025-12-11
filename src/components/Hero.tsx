@@ -1,7 +1,7 @@
 /**
  * @file Hero.tsx
  * @description Main hero section with podcast branding, tagline, and CTAs.
- * @dependencies framer-motion, Button, logo assets
+ * @dependencies framer-motion, Button, logo assets, useTypewriter
  */
 
 import { motion } from "framer-motion";
@@ -9,12 +9,16 @@ import { Button } from "./ui/button";
 import { Music2, MessageSquare } from "lucide-react";
 import logo from "@/assets/logo.png";
 import heroBackground from "@/assets/hero-background.gif";
+import { useTypewriter } from "@/hooks/useTypewriter";
 
 interface HeroProps {
   onApplyClick: () => void;
 }
 
 export const Hero = ({ onApplyClick }: HeroProps) => {
+  const tagline = "Conversations to inspire a new era where everyone builds with AI.";
+  const { displayedText, showCursor } = useTypewriter({ text: tagline, speed: 35, delay: 1000 });
+
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div className="absolute inset-0 gradient-mesh" />
@@ -41,16 +45,23 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           />
         </motion.div>
         
-        <motion.p
-          className="mt-8 mb-2 text-lg md:text-2xl font-bold text-gradient max-w-3xl mx-auto tracking-normal leading-tight"
-          style={{ textShadow: '0 2px 20px hsl(var(--glow-primary) / 0.2)', lineHeight: '1.2' }}
+        <motion.div
+          className="mt-8 mb-2 text-lg md:text-2xl font-light text-foreground/90 max-w-3xl mx-auto tracking-wide leading-relaxed h-[3.5rem] md:h-[2.5rem]"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <span className="hidden md:inline">Conversations to inspire a new era where everyone builds with AI.</span>
-          <span className="md:hidden">Conversations to inspire a new era<br />where everyone builds with AI.</span>
-        </motion.p>
+          <span>{displayedText}</span>
+          <motion.span
+            className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
+            animate={{ opacity: showCursor ? [1, 0] : 0 }}
+            transition={{ 
+              duration: 0.6, 
+              repeat: showCursor ? Infinity : 0, 
+              repeatType: "reverse" 
+            }}
+          />
+        </motion.div>
         
         <motion.div
           className="flex flex-col sm:flex-row gap-4 justify-center items-center mt-8"
