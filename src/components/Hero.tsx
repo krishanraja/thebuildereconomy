@@ -65,7 +65,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             
             {/* Actual typing text positioned absolutely, left-aligned in fixed container */}
             <span 
-              className="absolute inset-0 text-left"
+              className="absolute inset-0 text-center md:text-left"
             >
               {displayedText}
               {!isTypingComplete && (
