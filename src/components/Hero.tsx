@@ -49,31 +49,40 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.div>
         
         <motion.div
-          className="mt-8 mb-2 text-lg md:text-2xl font-light text-foreground/90 max-w-3xl mx-auto tracking-wide leading-relaxed h-[3.5rem] md:h-[2.5rem]"
+          className="mt-8 mb-2 text-lg md:text-2xl font-light text-foreground/90 max-w-3xl mx-auto tracking-wide leading-relaxed min-h-[3.5rem] md:min-h-[2.5rem] flex items-center justify-center"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <motion.div
-            className="transition-all duration-300"
-            animate={{ 
-              textAlign: isTypingComplete ? "center" : "left"
-            }}
-            transition={{ duration: 0.3, ease: "easeInOut" }}
-          >
-            <span>{displayedText}</span>
-            {!isTypingComplete && (
-              <motion.span
-                className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
-                animate={{ opacity: [1, 0] }}
-                transition={{ 
-                  duration: 0.6, 
-                  repeat: Infinity, 
-                  repeatType: "reverse" 
-                }}
-              />
-            )}
-          </motion.div>
+          <div className="relative w-full">
+            {/* Invisible full text to reserve space and determine center position */}
+            <div 
+              className="invisible text-center whitespace-normal"
+              aria-hidden="true"
+            >
+              {tagline}
+            </div>
+            
+            {/* Actual typing text positioned absolutely to match final center position */}
+            <div 
+              className="absolute inset-0 flex items-center justify-center"
+            >
+              <div className={isTypingComplete ? "text-center" : "text-left"}>
+                <span>{displayedText}</span>
+                {!isTypingComplete && (
+                  <motion.span
+                    className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ 
+                      duration: 0.6, 
+                      repeat: Infinity, 
+                      repeatType: "reverse" 
+                    }}
+                  />
+                )}
+              </div>
+            </div>
+          </div>
         </motion.div>
         
         <motion.div
