@@ -18,6 +18,9 @@ interface HeroProps {
 export const Hero = ({ onApplyClick }: HeroProps) => {
   const tagline = "Conversations to inspire a new era where everyone builds with AI.";
   const { displayedText, showCursor } = useTypewriter({ text: tagline, speed: 35, delay: 1000 });
+  
+  // Calculate if typewriter animation is complete
+  const isTypingComplete = displayedText === tagline;
 
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
@@ -51,16 +54,26 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <span>{displayedText}</span>
-          <motion.span
-            className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
-            animate={{ opacity: showCursor ? [1, 0] : 0 }}
-            transition={{ 
-              duration: 0.6, 
-              repeat: showCursor ? Infinity : 0, 
-              repeatType: "reverse" 
+          <motion.div
+            className="transition-all duration-300"
+            animate={{ 
+              textAlign: isTypingComplete ? "center" : "left"
             }}
-          />
+            transition={{ duration: 0.3, ease: "easeInOut" }}
+          >
+            <span>{displayedText}</span>
+            {!isTypingComplete && (
+              <motion.span
+                className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
+                animate={{ opacity: [1, 0] }}
+                transition={{ 
+                  duration: 0.6, 
+                  repeat: Infinity, 
+                  repeatType: "reverse" 
+                }}
+              />
+            )}
+          </motion.div>
         </motion.div>
         
         <motion.div
