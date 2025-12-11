@@ -54,34 +54,32 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
         >
-          <div className="relative w-full">
-            {/* Invisible full text to reserve space and determine center position */}
-            <div 
-              className="invisible text-center whitespace-normal"
+          <div className="relative inline-block">
+            {/* Invisible full text to set container width */}
+            <span 
+              className="invisible block"
               aria-hidden="true"
             >
               {tagline}
-            </div>
+            </span>
             
-            {/* Actual typing text positioned absolutely to match final center position */}
-            <div 
-              className="absolute inset-0 flex items-center justify-center"
+            {/* Actual typing text positioned absolutely, left-aligned in fixed container */}
+            <span 
+              className="absolute inset-0 text-left"
             >
-              <div className={isTypingComplete ? "text-center" : "text-left"}>
-                <span>{displayedText}</span>
-                {!isTypingComplete && (
-                  <motion.span
-                    className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
-                    animate={{ opacity: [1, 0] }}
-                    transition={{ 
-                      duration: 0.6, 
-                      repeat: Infinity, 
-                      repeatType: "reverse" 
-                    }}
-                  />
-                )}
-              </div>
-            </div>
+              {displayedText}
+              {!isTypingComplete && (
+                <motion.span
+                  className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
+                  animate={{ opacity: [1, 0] }}
+                  transition={{ 
+                    duration: 0.6, 
+                    repeat: Infinity, 
+                    repeatType: "reverse" 
+                  }}
+                />
+              )}
+            </span>
           </div>
         </motion.div>
         
