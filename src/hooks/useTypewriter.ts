@@ -60,39 +60,42 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         </motion.div>
         
         <motion.div
-          className="mt-8 mb-2 text-lg md:text-2xl font-light text-foreground/90 max-w-3xl mx-auto tracking-wide leading-relaxed"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 0.8, delay: 0.6 }}
-          ref={containerRef}
         >
-          <div className="relative min-h-[3.5rem] md:min-h-[2.5rem]">
-            {/* Invisible measurement text to calculate final width */}
-            <div 
-              ref={measureRef}
-              className="invisible inline-block text-left"
-              aria-hidden="true"
-            >
-              {tagline}
-            </div>
-            
-            {/* Visible typing text - positioned with calculated offset */}
-            <div 
-              className="absolute top-0 text-left"
-              style={{ left: `${leftOffset}px` }}
-            >
-              {displayedText}
-              {showCursor && (
-                <motion.span
-                  className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
-                  animate={{ opacity: [1, 0] }}
-                  transition={{ 
-                    duration: 0.6, 
-                    repeat: Infinity, 
-                    repeatType: "reverse" 
-                  }}
-                />
-              )}
+          <div 
+            ref={containerRef}
+            className="mt-8 mb-2 text-lg md:text-2xl font-light text-foreground/90 max-w-3xl mx-auto tracking-wide leading-relaxed"
+          >
+            <div className="relative min-h-[3.5rem] md:min-h-[2.5rem]">
+              {/* Invisible measurement text to calculate final width */}
+              <div 
+                ref={measureRef}
+                className="invisible inline-block text-left"
+                aria-hidden="true"
+              >
+                {tagline}
+              </div>
+              
+              {/* Visible typing text - positioned with calculated offset */}
+              <div 
+                className="absolute top-0 text-left"
+                style={{ left: `${leftOffset}px` }}
+              >
+                {displayedText}
+                {showCursor && (
+                  <motion.span
+                    className="inline-block w-[2px] h-[1.1em] bg-primary ml-1 align-middle"
+                    animate={{ opacity: [1, 0] }}
+                    transition={{ 
+                      duration: 0.6, 
+                      repeat: Infinity, 
+                      repeatType: "reverse" 
+                    }}
+                  />
+                )}
+              </div>
             </div>
           </div>
         </motion.div>
