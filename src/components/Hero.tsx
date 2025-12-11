@@ -37,7 +37,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           <img 
             src={logo} 
             alt="The Builder Economy" 
-            className="w-full max-w-[240px] md:max-w-[38rem] mx-auto"
+            className="w-full max-w-[120px] md:max-w-[19rem] mx-auto"
           />
         </motion.div>
         
