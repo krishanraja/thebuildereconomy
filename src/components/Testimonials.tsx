@@ -22,6 +22,7 @@ export const Testimonials = () => {
       if (error) throw error;
       return data;
     },
+    enabled: isInView,
   });
 
   if (!testimonials || testimonials.length === 0) return null;

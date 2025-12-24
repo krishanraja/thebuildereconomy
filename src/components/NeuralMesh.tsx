@@ -3,6 +3,8 @@ import { motion } from "framer-motion";
 
 export const NeuralMesh = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isVisibleRef = useRef(true);
+  const animationFrameIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -31,9 +33,12 @@ export const NeuralMesh = () => {
       });
     }
 
-    let animationFrameId: number;
-
     const animate = () => {
+      if (!isVisibleRef.current) {
+        animationFrameIdRef.current = null;
+        return;
+      }
+
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
       // Update and draw particles
@@ -68,9 +73,10 @@ export const NeuralMesh = () => {
         ctx.fill();
       });
 
-      animationFrameId = requestAnimationFrame(animate);
+      animationFrameIdRef.current = requestAnimationFrame(animate);
     };
 
+    // Start animation
     animate();
 
     const handleResize = () => {
@@ -78,10 +84,29 @@ export const NeuralMesh = () => {
       canvas.height = window.innerHeight;
     };
 
+    // Intersection Observer to pause animation when off-screen
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          isVisibleRef.current = entry.isIntersecting;
+          if (entry.isIntersecting && !animationFrameIdRef.current) {
+            animate();
+          }
+        });
+      },
+      {
+        threshold: 0.1, // Trigger when at least 10% visible
+      }
+    );
+
+    observer.observe(canvas);
     window.addEventListener("resize", handleResize);
 
     return () => {
-      cancelAnimationFrame(animationFrameId);
+      if (animationFrameIdRef.current) {
+        cancelAnimationFrame(animationFrameIdRef.current);
+      }
+      observer.disconnect();
       window.removeEventListener("resize", handleResize);
     };
   }, []);

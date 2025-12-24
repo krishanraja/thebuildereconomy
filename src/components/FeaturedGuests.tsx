@@ -22,6 +22,7 @@ export const FeaturedGuests = () => {
       if (error) throw error;
       return data;
     },
+    enabled: isInView,
   });
 
   if (!guests || guests.length === 0) return null;
@@ -52,6 +53,7 @@ export const FeaturedGuests = () => {
                     src={guest.photo_url}
                     alt={guest.name}
                     className="w-24 h-24 rounded-full mx-auto mb-4 object-cover"
+                    loading="lazy"
                   />
                 )}
                 

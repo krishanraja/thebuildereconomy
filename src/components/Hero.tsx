@@ -25,9 +25,13 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
   return (
     <section className="relative min-h-screen flex items-center justify-center px-4 overflow-hidden">
       <div className="absolute inset-0 gradient-mesh" />
-      <div 
-        className="absolute inset-0 bg-cover bg-center opacity-40"
-        style={{ backgroundImage: `url(${heroBackground})` }}
+      <img
+        src={heroBackground}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover opacity-40"
+        loading="eager"
+        fetchPriority="low"
+        aria-hidden="true"
       />
       
       <motion.div
@@ -45,6 +49,8 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             src={logo} 
             alt="The Builder Economy" 
             className="w-full max-w-[120px] md:max-w-[19rem] mx-auto"
+            loading="eager"
+            fetchPriority="high"
           />
         </motion.div>
         

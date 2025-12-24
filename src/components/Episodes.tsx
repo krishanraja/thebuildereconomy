@@ -24,6 +24,7 @@ export const Episodes = () => {
       if (error) throw error;
       return data;
     },
+    enabled: isInView,
   });
 
   if (!episodes || episodes.length === 0) return null;
@@ -55,6 +56,7 @@ export const Episodes = () => {
                       src={episode.cover_image_url}
                       alt={episode.title}
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      loading="lazy"
                     />
                     <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center">
                       <Play className="w-12 h-12 text-white" />
