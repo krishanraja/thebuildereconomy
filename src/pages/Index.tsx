@@ -9,8 +9,6 @@ const GuestCTA = lazy(() => import("@/components/GuestCTA").then(m => ({ default
 const FeaturedGuests = lazy(() => import("@/components/FeaturedGuests").then(m => ({ default: m.FeaturedGuests })));
 const Episodes = lazy(() => import("@/components/Episodes").then(m => ({ default: m.Episodes })));
 const Testimonials = lazy(() => import("@/components/Testimonials").then(m => ({ default: m.Testimonials })));
-const Subscribe = lazy(() => import("@/components/Subscribe").then(m => ({ default: m.Subscribe })));
-const WhoBuilds = lazy(() => import("@/components/WhoBuilds").then(m => ({ default: m.WhoBuilds })));
 const Footer = lazy(() => import("@/components/Footer").then(m => ({ default: m.Footer })));
 const GuestApplicationModal = lazy(() => import("@/components/GuestApplicationModal").then(m => ({ default: m.GuestApplicationModal })));
 
@@ -32,8 +30,6 @@ const Index = () => {
         <Suspense fallback={null}><FeaturedGuests /></Suspense>
         <Suspense fallback={null}><Episodes /></Suspense>
         <Suspense fallback={null}><Testimonials /></Suspense>
-        <Suspense fallback={null}><Subscribe /></Suspense>
-        <Suspense fallback={null}><WhoBuilds /></Suspense>
       </main>
 
       <Suspense fallback={null}><Footer /></Suspense>
