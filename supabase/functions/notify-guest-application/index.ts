@@ -1,11 +1,3 @@
-/**
- * @file notify-guest-application/index.ts
- * @description Edge function to notify admin of new guest applications and send auto-reply to applicant.
- * @trigger Called from GuestApplicationModal.tsx after successful application insert.
- * @requires RESEND_API_KEY secret
- * @security Zod validation, HTML sanitization, rate limiting
- */
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { z } from "https://esm.sh/zod@3.22.4";
 
@@ -14,44 +6,32 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
 };
 
-// Zod schema for input validation
 const applicationSchema = z.object({
-  full_name: z.string().trim().min(1, "Name is required").max(100, "Name too long"),
-  email: z.string().trim().email("Invalid email").max(255, "Email too long"),
-  title_company: z.string().trim().max(200, "Title too long").optional().default(""),
-  topic_pitch: z.string().trim().max(2000, "Pitch too long").optional().default(""),
-  social_link: z.string().trim().url("Invalid URL").max(500, "URL too long").optional().or(z.literal("")),
+  full_name: z.string().trim().min(1).max(100),
+  email: z.string().trim().email().max(255),
+  linkedin_url: z.string().trim().max(500).optional().or(z.literal("")),
+  what_building: z.string().trim().max(500).optional().default(""),
+  how_using_ai: z.string().trim().max(500).optional().default(""),
+  surprise_insight: z.string().trim().max(2000).optional().default(""),
+  stage: z.string().trim().max(100).optional().default(""),
+  product_link: z.string().trim().max(500).optional().or(z.literal("")),
+  takeaway: z.string().trim().max(2000).optional().default(""),
 });
 
-// HTML sanitization to prevent injection
 const escapeHtml = (str: string): string => {
   if (!str) return "";
-  return str
-    .replace(/&/g, "&amp;")
-    .replace(/</g, "&lt;")
-    .replace(/>/g, "&gt;")
-    .replace(/"/g, "&quot;")
-    .replace(/'/g, "&#039;");
+  return str.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
 };
 
-// Simple in-memory rate limiting (resets on function cold start)
 const rateLimitMap = new Map<string, { count: number; resetTime: number }>();
-const RATE_LIMIT = 5; // max requests
-const RATE_WINDOW = 60 * 1000; // per minute
-
 const checkRateLimit = (ip: string): boolean => {
   const now = Date.now();
   const record = rateLimitMap.get(ip);
-  
   if (!record || now > record.resetTime) {
-    rateLimitMap.set(ip, { count: 1, resetTime: now + RATE_WINDOW });
+    rateLimitMap.set(ip, { count: 1, resetTime: now + 60000 });
     return true;
   }
-  
-  if (record.count >= RATE_LIMIT) {
-    return false;
-  }
-  
+  if (record.count >= 5) return false;
   record.count++;
   return true;
 };
@@ -61,122 +41,87 @@ const handler = async (req: Request): Promise<Response> => {
     return new Response(null, { headers: corsHeaders });
   }
 
-  // Rate limiting
-  const clientIp = req.headers.get("x-forwarded-for") || req.headers.get("cf-connecting-ip") || "unknown";
+  const clientIp = req.headers.get("x-forwarded-for") || "unknown";
   if (!checkRateLimit(clientIp)) {
-    console.warn(`Rate limit exceeded for IP: ${clientIp}`);
-    return new Response(
-      JSON.stringify({ error: "Too many requests. Please try again later." }),
-      { status: 429, headers: { "Content-Type": "application/json", ...corsHeaders } }
-    );
+    return new Response(JSON.stringify({ error: "Too many requests" }), {
+      status: 429, headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
   }
 
   try {
     const rawBody = await req.json();
-    console.log("Raw application data received:", JSON.stringify(rawBody));
-
-    // Validate input with Zod
     const parseResult = applicationSchema.safeParse(rawBody);
     if (!parseResult.success) {
-      console.error("Validation failed:", parseResult.error.flatten());
-      return new Response(
-        JSON.stringify({ error: "Invalid input", details: parseResult.error.flatten() }),
-        { status: 400, headers: { "Content-Type": "application/json", ...corsHeaders } }
-      );
+      return new Response(JSON.stringify({ error: "Invalid input", details: parseResult.error.flatten() }), {
+        status: 400, headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
     }
 
-    const application = parseResult.data;
-    console.log("Validated application:", JSON.stringify(application));
-
-    // Sanitize all fields for HTML email
-    const safeName = escapeHtml(application.full_name);
-    const safeEmail = escapeHtml(application.email);
-    const safeTitle = escapeHtml(application.title_company || "N/A");
-    const safePitch = escapeHtml(application.topic_pitch || "N/A");
-    const safeLink = escapeHtml(application.social_link || "N/A");
+    const app = parseResult.data;
+    const s = (v: string | undefined) => escapeHtml(v || "N/A");
 
     const resendApiKey = Deno.env.get("RESEND_API_KEY");
     if (!resendApiKey) {
-      console.error("RESEND_API_KEY is not configured");
-      return new Response(
-        JSON.stringify({ error: "Email service not configured" }),
-        { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
-      );
+      return new Response(JSON.stringify({ error: "Email service not configured" }), {
+        status: 500, headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
     }
 
-    // Send notification to admin
-    console.log("Sending admin notification email...");
     const adminEmailResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${resendApiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: "The Builder Economy <krish@themindmaker.ai>",
         to: ["krish@themindmaker.ai"],
-        subject: "🎙️ New Guest Application — The Builder Economy",
+        subject: `🎙️ New Guest Application — ${escapeHtml(app.full_name)}`,
         html: `
-          <h2>New Guest Application Received</h2>
-          <p><strong>Name:</strong> ${safeName}</p>
-          <p><strong>Email:</strong> ${safeEmail}</p>
-          <p><strong>Title/Company:</strong> ${safeTitle}</p>
-          <p><strong>Topic Pitch:</strong></p>
-          <p>${safePitch}</p>
-          <p><strong>Social Link:</strong> ${safeLink}</p>
+          <h2>New Guest Application</h2>
+          <table style="border-collapse:collapse;width:100%;max-width:600px;">
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Name</td><td style="padding:8px;">${s(app.full_name)}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Email</td><td style="padding:8px;"><a href="mailto:${s(app.email)}">${s(app.email)}</a></td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">LinkedIn</td><td style="padding:8px;">${app.linkedin_url ? `<a href="${s(app.linkedin_url)}">${s(app.linkedin_url)}</a>` : "N/A"}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Building</td><td style="padding:8px;">${s(app.what_building)}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Using AI</td><td style="padding:8px;">${s(app.how_using_ai)}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Surprise</td><td style="padding:8px;">${s(app.surprise_insight)}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Stage</td><td style="padding:8px;">${s(app.stage)}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Link</td><td style="padding:8px;">${app.product_link ? `<a href="${s(app.product_link)}">${s(app.product_link)}</a>` : "N/A"}</td></tr>
+            <tr><td style="padding:8px;font-weight:bold;vertical-align:top;">Takeaway</td><td style="padding:8px;">${s(app.takeaway)}</td></tr>
+          </table>
         `,
       }),
     });
 
-    const adminEmailResult = await adminEmailResponse.json();
-    console.log("Admin email response:", JSON.stringify(adminEmailResult), "Status:", adminEmailResponse.status);
+    const adminResult = await adminEmailResponse.json();
+    if (!adminEmailResponse.ok) console.error("Admin email failed:", adminResult);
 
-    if (!adminEmailResponse.ok) {
-      console.error("Failed to send admin email:", adminEmailResult);
-    }
-
-    // Send auto-reply to applicant
-    console.log("Sending auto-reply to applicant...");
+    // Auto-reply
     const autoReplyResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
-      headers: {
-        "Authorization": `Bearer ${resendApiKey}`,
-        "Content-Type": "application/json",
-      },
+      headers: { Authorization: `Bearer ${resendApiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
         from: "Krish Raja <krish@themindmaker.ai>",
-        to: [application.email],
+        to: [app.email],
         subject: "Thanks for applying to The Builder Economy 🚀",
         html: `
-          <h2>Hi ${safeName},</h2>
-          <p>Thanks for applying to join The Builder Economy.</p>
-          <p>We'll review your pitch and be in touch soon.</p>
-          <p>In the meantime, check out our latest episodes:</p>
-          <ul>
-            <li><a href="https://thebuildereconomy.com">Recent Episodes</a></li>
-          </ul>
-          <p>Best regards,<br>Krish Raja</p>
+          <h2>Hi ${s(app.full_name)},</h2>
+          <p>Thanks for applying to be a guest on The Builder Economy. I love that you're building <strong>${s(app.what_building)}</strong>.</p>
+          <p>I'll review your application and get back to you soon.</p>
+          <p>— Krish</p>
         `,
       }),
     });
 
-    const autoReplyResult = await autoReplyResponse.json();
-    console.log("Auto-reply response:", JSON.stringify(autoReplyResult), "Status:", autoReplyResponse.status);
+    const autoResult = await autoReplyResponse.json();
+    if (!autoReplyResponse.ok) console.error("Auto-reply failed:", autoResult);
 
-    if (!autoReplyResponse.ok) {
-      console.error("Failed to send auto-reply:", autoReplyResult);
-    }
-
-    return new Response(
-      JSON.stringify({ success: true, adminEmail: adminEmailResult, autoReply: autoReplyResult }),
-      { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }
-    );
+    return new Response(JSON.stringify({ success: true }), {
+      status: 200, headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
   } catch (error: any) {
-    console.error("Error in notify-guest-application:", error.message, error.stack);
-    return new Response(
-      JSON.stringify({ error: error.message }),
-      { status: 500, headers: { "Content-Type": "application/json", ...corsHeaders } }
-    );
+    console.error("Error:", error.message);
+    return new Response(JSON.stringify({ error: error.message }), {
+      status: 500, headers: { "Content-Type": "application/json", ...corsHeaders },
+    });
   }
 };
 

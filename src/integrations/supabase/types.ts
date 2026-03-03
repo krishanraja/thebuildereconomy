@@ -59,30 +59,51 @@ export type Database = {
           created_at: string | null
           email: string
           full_name: string
+          how_using_ai: string | null
           id: string
+          linkedin_url: string | null
+          product_link: string | null
           social_link: string | null
+          stage: string | null
+          surprise_insight: string | null
+          takeaway: string | null
           title_company: string | null
           topic_pitch: string | null
+          what_building: string | null
         }
         Insert: {
           approved?: boolean | null
           created_at?: string | null
           email: string
           full_name: string
+          how_using_ai?: string | null
           id?: string
+          linkedin_url?: string | null
+          product_link?: string | null
           social_link?: string | null
+          stage?: string | null
+          surprise_insight?: string | null
+          takeaway?: string | null
           title_company?: string | null
           topic_pitch?: string | null
+          what_building?: string | null
         }
         Update: {
           approved?: boolean | null
           created_at?: string | null
           email?: string
           full_name?: string
+          how_using_ai?: string | null
           id?: string
+          linkedin_url?: string | null
+          product_link?: string | null
           social_link?: string | null
+          stage?: string | null
+          surprise_insight?: string | null
+          takeaway?: string | null
           title_company?: string | null
           topic_pitch?: string | null
+          what_building?: string | null
         }
         Relationships: []
       }
