@@ -7,7 +7,7 @@ export const Footer = () => {
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           <div className="text-center md:text-left">
             <h3 className="text-xl font-bold mb-2">The Builder Economy</h3>
-            <p className="text-sm text-muted-foreground">A Mindmaker Production</p>
+            <p className="text-sm text-muted-foreground">a Mindmaker LLC product. New York, NY.</p>
           </div>
 
           <div className="flex gap-6">
@@ -30,7 +30,7 @@ export const Footer = () => {
               <Youtube className="w-6 h-6" />
             </a>
             <a
-              href="https://linkedin.com"
+              href="https://www.linkedin.com/in/krish-raja/"
               target="_blank"
               rel="noopener noreferrer"
               className="text-muted-foreground hover:text-primary transition-colors"

@@ -16,7 +16,7 @@ interface HeroProps {
 }
 
 export const Hero = ({ onApplyClick }: HeroProps) => {
-  const tagline = "Conversations to inspire a new era where everyone builds with AI.";
+  const tagline = "The show for the builder era.";
   const { displayedText, showCursor } = useTypewriter({ text: tagline, speed: 35, delay: 1000 });
   
   // Calculate if typewriter animation is complete
