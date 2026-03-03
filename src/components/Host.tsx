@@ -1,7 +1,8 @@
 import { motion } from "framer-motion";
 import { useInView } from "framer-motion";
 import { useRef } from "react";
-import { Linkedin, User } from "lucide-react";
+import { Linkedin } from "lucide-react";
+import krishHeadshot from "@/assets/krish-headshot.png";
 import { Button } from "./ui/button";
 
 const containerVariants = {
@@ -46,9 +47,9 @@ export const Host = () => {
           {/* Host photo placeholder */}
           <motion.div
             variants={photoVariants}
-            className="mx-auto md:mx-0 w-64 h-64 md:w-[280px] md:h-[320px] rounded-2xl bg-card/60 border border-primary/20 flex items-center justify-center"
+            className="mx-auto md:mx-0 w-64 h-64 md:w-[280px] md:h-[320px] rounded-2xl bg-card/60 border border-primary/20 overflow-hidden"
           >
-            <User className="w-20 h-20 text-muted-foreground/40" />
+            <img src={krishHeadshot} alt="Krish Raja" className="w-full h-full object-cover rounded-2xl" />
           </motion.div>
 
           {/* Bio */}

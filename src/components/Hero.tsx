@@ -6,8 +6,9 @@
 
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
-import { Music2, MessageSquare } from "lucide-react";
+import { Music2, MessageSquare, ArrowUpRight } from "lucide-react";
 import logo from "@/assets/logo.png";
+import { WhoBuilds } from "./WhoBuilds";
 import heroBackground from "@/assets/hero-background.gif";
 import { useTypewriter } from "@/hooks/useTypewriter";
 
@@ -119,7 +120,29 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             Apply to Be a Guest
           </Button>
         </motion.div>
+
+        <motion.div
+          className="mt-4"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.8, delay: 1.2 }}
+        >
+          <a
+            href="https://live.themindmaker.ai"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-primary transition-colors"
+          >
+            Join the Community
+            <ArrowUpRight className="h-3.5 w-3.5" />
+          </a>
+        </motion.div>
       </motion.div>
+
+      {/* Bottom ticker */}
+      <div className="absolute bottom-0 left-0 right-0 z-10">
+        <WhoBuilds />
+      </div>
     </section>
   );
 };
