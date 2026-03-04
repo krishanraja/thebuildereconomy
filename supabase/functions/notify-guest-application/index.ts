@@ -73,7 +73,7 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "The Builder Economy <krish@themindmaker.ai>",
         to: ["krish@themindmaker.ai"],
-        subject: `🎙️ New Guest Application — ${escapeHtml(app.full_name)}`,
+        subject: `🎙️ New Guest Application (Builder Economy) — ${escapeHtml(app.full_name)}`,
         html: `
           <h2>New Guest Application</h2>
           <table style="border-collapse:collapse;width:100%;max-width:600px;">
