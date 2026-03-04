@@ -39,7 +39,7 @@ export const About = () => {
         </motion.h2>
 
         <motion.p
-          className="text-xl text-muted-foreground leading-relaxed mb-6"
+          className="text-lg text-muted-foreground leading-relaxed mb-6"
           variants={itemVariants}
         >
           The Creator Economy gave everyone a camera and mic. The Builder Economy gives everyone a digital factory.
