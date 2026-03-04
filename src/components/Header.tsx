@@ -30,7 +30,7 @@ export const Header = () => {
         <img 
           src={mindmakerLogo} 
           alt="Mindmaker" 
-          className={`h-15 md:h-[6.4rem] w-auto hover:opacity-100 cursor-pointer transition-all duration-300 ${
+          className={`h-[3.75rem] md:h-[6.4rem] w-auto hover:opacity-100 cursor-pointer transition-all duration-300 ${
             scrolled ? "opacity-0" : "opacity-70 md:opacity-90"
           }`}
           loading="eager"
