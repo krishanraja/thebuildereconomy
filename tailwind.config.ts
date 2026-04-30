@@ -13,12 +13,29 @@ export default {
       },
     },
     extend: {
+      fontFamily: {
+        sans: ["Outfit", "Inter", "sans-serif"],
+        display: ["Fraunces", "Instrument Serif", "Georgia", "serif"],
+      },
       colors: {
         border: "hsl(var(--border))",
         input: "hsl(var(--input))",
         ring: "hsl(var(--ring))",
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
+        // Editorial palette tokens
+        ink: {
+          DEFAULT: "hsl(var(--ink))",
+          deep: "hsl(var(--ink-deep))",
+        },
+        mint: {
+          DEFAULT: "hsl(var(--mint))",
+          deep: "hsl(var(--mint-deep))",
+        },
+        cream: "hsl(var(--cream))",
+        butter: "hsl(var(--butter))",
+        coral: "hsl(var(--coral))",
+        // shadcn semantic
         primary: {
           DEFAULT: "hsl(var(--primary))",
           foreground: "hsl(var(--primary-foreground))",
@@ -65,30 +82,34 @@ export default {
       },
       keyframes: {
         "accordion-down": {
-          from: {
-            height: "0",
-          },
-          to: {
-            height: "var(--radix-accordion-content-height)",
-          },
+          from: { height: "0" },
+          to: { height: "var(--radix-accordion-content-height)" },
         },
         "accordion-up": {
-          from: {
-            height: "var(--radix-accordion-content-height)",
-          },
-          to: {
-            height: "0",
-          },
+          from: { height: "var(--radix-accordion-content-height)" },
+          to: { height: "0" },
         },
         marquee: {
           "0%": { transform: "translateX(0%)" },
           "100%": { transform: "translateX(-50%)" },
+        },
+        "spin-slow": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(360deg)" },
+        },
+        "mask-wipe": {
+          "0%": { clipPath: "inset(0 100% 0 0)" },
+          "100%": { clipPath: "inset(0 0 0 0)" },
         },
       },
       animation: {
         "accordion-down": "accordion-down 0.2s ease-out",
         "accordion-up": "accordion-up 0.2s ease-out",
         marquee: "marquee 25s linear infinite",
+        "marquee-slow": "marquee 60s linear infinite",
+        "marquee-fast": "marquee 18s linear infinite",
+        "spin-slow": "spin-slow 22s linear infinite",
+        "mask-wipe": "mask-wipe 0.9s cubic-bezier(0.77, 0, 0.175, 1) forwards",
       },
     },
   },
