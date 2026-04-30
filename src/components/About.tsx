@@ -1,64 +1,77 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+/**
+ * @file About.tsx
+ * @description Mint block. Sticky-pin layout: oversized pull quote on the left,
+ * body copy scrolls past on the right. Butter highlighter on "factory".
+ */
+
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-
-const containerVariants = {
-  hidden: { opacity: 0 },
-  visible: {
-    opacity: 1,
-    transition: { staggerChildren: 0.2 },
-  },
-};
-
-const itemVariants = {
-  hidden: { opacity: 0, y: 40 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.7, ease: [0.25, 0.46, 0.45, 0.94] as const },
-  },
-};
+import { Img } from "@/lib/images";
 
 export const About = () => {
   const ref = useRef(null);
-  const isInView = useInView(ref, { once: true, margin: "-100px" });
+  const isInView = useInView(ref, { once: true, margin: "-120px" });
 
   return (
-    <section ref={ref} className="py-24 px-4 relative">
-      <motion.div
-        className="max-w-4xl mx-auto text-center"
-        variants={containerVariants}
-        initial="hidden"
-        animate={isInView ? "visible" : "hidden"}
-      >
-        <motion.h2
-          className="text-4xl md:text-5xl font-bold mb-10"
-          variants={itemVariants}
+    <section ref={ref} className="block-mint relative overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-36">
+        {/* Eyebrow */}
+        <motion.div
+          className="eyebrow mb-12 flex items-center gap-3"
+          initial={{ opacity: 0, x: -20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+          transition={{ duration: 0.6 }}
         >
-          About the <span className="text-gradient">Show</span>
-        </motion.h2>
+          <span className="h-px w-10 bg-ink" />
+          <span>The show</span>
+        </motion.div>
 
-        <motion.p
-          className="text-lg text-muted-foreground leading-relaxed mb-6"
-          variants={itemVariants}
-        >
-          The Creator Economy gave everyone a camera and mic. The Builder Economy gives everyone a digital factory.
-        </motion.p>
+        <div className="grid md:grid-cols-[1.2fr_1fr] gap-12 md:gap-20 items-start">
+          {/* Display pull-quote */}
+          <motion.h2
+            className="display-serif text-ink text-[clamp(2.5rem,7vw,7rem)] leading-[0.92]"
+            initial={{ opacity: 0, y: 40 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
+          >
+            The Creator Economy gave everyone a camera.
+            <br />
+            The Builder Economy gives everyone a{" "}
+            <span className="swipe-butter italic">factory</span>.
+          </motion.h2>
 
-        <motion.p
-          className="text-lg text-muted-foreground leading-relaxed mb-6"
-          variants={itemVariants}
-        >
-          For the first time, the gap between idea and reality is almost nothing. AI hasn't just changed what you can build — it's changed who can build it. First-time founders. Solo operators. People with zero engineering background. They're shipping products, growing companies, and rewriting what entrepreneurship looks like.
-        </motion.p>
+          {/* Right: body + sticky-pin sidekick */}
+          <div className="md:pt-8">
+            <div className="md:sticky md:top-24 hidden md:block mb-8 aspect-[4/5] max-w-[280px]">
+              <Img
+                src="/images/about/about-collage-1.jpg"
+                alt="A builder shipping"
+                fallbackTone="ink"
+                fallbackLabel="SHIP"
+                wrapperClassName="absolute inset-0 shadow-brutal"
+                className="absolute inset-0 w-full h-full object-cover shadow-brutal"
+              />
+            </div>
 
-        <motion.p
-          className="text-lg text-muted-foreground leading-relaxed"
-          variants={itemVariants}
-        >
-          The Builder Economy is the show that documents this era. Every week, we sit down with the people building it — and go deep on how they're actually doing it.
-        </motion.p>
-      </motion.div>
+            <motion.div
+              className="space-y-6 text-lg md:text-xl leading-relaxed text-ink/85 max-w-xl"
+              initial={{ opacity: 0, y: 30 }}
+              animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+            >
+              <p>
+                For the first time, the gap between idea and shipped product is almost zero. AI didn&apos;t just change what you can build — it changed who gets to build it.
+              </p>
+              <p className="font-medium text-ink">
+                First-time founders. Solo operators. People who&apos;ve never written a line of code.
+              </p>
+              <p>
+                They&apos;re shipping, growing, and quietly rewriting what entrepreneurship looks like. Every week, we sit down with one of them and go deep on how they&apos;re actually doing it.
+              </p>
+            </motion.div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 };
