@@ -87,7 +87,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
               </motion.span>
             ))}
             <motion.span className="inline-block mr-[0.15em]" variants={wordVariants}>
-              <span className="swipe-mint italic">{headlineKeyword}</span>
+              <span className="swipe-mint italic text-ink font-bold">{headlineKeyword}</span>
             </motion.span>
             {headlineRest.map((w, i) => (
               <motion.span key={i} className="inline-block mr-[0.25em]" variants={wordVariants}>
