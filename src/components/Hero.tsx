@@ -9,7 +9,6 @@
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
 import { ArrowUpRight } from "lucide-react";
-import logo from "@/assets/logo.png";
 import spotifyLogo from "@/assets/spotify-logo.png";
 import youtubeLogo from "@/assets/youtube-logo.png";
 import { MagneticButton } from "./MagneticButton";
@@ -66,9 +65,9 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             className="mb-8 md:mb-10"
           >
             <img
-              src={logo}
+              src="/builder3.png"
               alt="The Builder Economy"
-              className="h-16 md:h-24 w-auto"
+              className="h-24 md:h-36 w-auto"
               loading="eager"
               fetchPriority="high"
             />
