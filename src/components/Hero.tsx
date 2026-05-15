@@ -8,9 +8,7 @@
 
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
-import { ArrowUpRight } from "lucide-react";
-import spotifyLogo from "@/assets/spotify-logo.png";
-import youtubeLogo from "@/assets/youtube-logo.png";
+import { ArrowUpRight, Bell } from "lucide-react";
 import { MagneticButton } from "./MagneticButton";
 import { Img } from "@/lib/images";
 
@@ -70,7 +68,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           </motion.h1>
 
           <motion.h2
-            className="display-serif text-cream/70 text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1.02] mb-10 md:mb-12 text-balance"
+            className="display-serif text-cream/90 text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1.02] mb-10 md:mb-12 text-balance"
             variants={lineContainer(0.85)}
             initial="hidden"
             animate="visible"
@@ -93,44 +91,31 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             shipping real businesses with AI. Hosted by Krish Raja.
           </motion.p>
 
-          {/* CTAs */}
+          {/* CTAs. Pre-launch the primary action is "notify me", which routes to
+              the existing community signup at live.themindmaker.ai. When Spotify
+              and YouTube URLs are live, swap this for a platform-buttons row. */}
           <motion.div
-            className="flex flex-wrap gap-3 md:gap-4 items-center"
+            className="flex flex-wrap gap-4 md:gap-5 items-center"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.3 }}
           >
-            <div className="relative group">
-              <MagneticButton>
-                <Button
-                  size="lg"
-                  className="rounded-none bg-mint text-ink hover:bg-mint hover:-translate-y-0.5 hover:shadow-brutal-cream transition-all px-7 py-6 text-base font-semibold cursor-not-allowed opacity-90"
-                  disabled
+            <MagneticButton>
+              <Button
+                asChild
+                size="lg"
+                className="rounded-none bg-mint text-ink hover:bg-mint hover:-translate-y-0.5 hover:shadow-brutal-cream transition-all px-8 py-7 text-base font-semibold"
+              >
+                <a
+                  href="https://live.themindmaker.ai"
+                  target="_blank"
+                  rel="noopener noreferrer"
                 >
-                  <img src={spotifyLogo} alt="" className="mr-2 h-5 w-auto" />
-                  Listen on Spotify
-                </Button>
-              </MagneticButton>
-              <span className="absolute -top-7 left-1/2 -translate-x-1/2 small-caps text-[10px] text-butter opacity-0 group-hover:opacity-100 transition-opacity">
-                Coming soon
-              </span>
-            </div>
-
-            <div className="relative group">
-              <MagneticButton>
-                <Button
-                  size="lg"
-                  className="rounded-none bg-cream text-ink hover:bg-cream hover:-translate-y-0.5 hover:shadow-brutal-mint transition-all px-7 py-6 text-base font-semibold cursor-not-allowed opacity-90"
-                  disabled
-                >
-                  <img src={youtubeLogo} alt="" className="mr-2 h-5 w-auto" />
-                  Watch on YouTube
-                </Button>
-              </MagneticButton>
-              <span className="absolute -top-7 left-1/2 -translate-x-1/2 small-caps text-[10px] text-butter opacity-0 group-hover:opacity-100 transition-opacity">
-                Coming soon
-              </span>
-            </div>
+                  <Bell className="mr-2 h-5 w-5" />
+                  Notify me when Ep. 01 drops
+                </a>
+              </Button>
+            </MagneticButton>
 
             <MagneticButton>
               <Button
@@ -143,23 +128,6 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
                 <ArrowUpRight className="ml-1 h-5 w-5" />
               </Button>
             </MagneticButton>
-          </motion.div>
-
-          <motion.div
-            className="mt-8"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.7, delay: 1.5 }}
-          >
-            <a
-              href="https://live.themindmaker.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 small-caps text-xs text-cream/60 hover:text-mint transition-colors"
-            >
-              Join the community
-              <ArrowUpRight className="h-3.5 w-3.5" />
-            </a>
           </motion.div>
         </div>
 
@@ -175,14 +143,14 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
               Until then, the butter "01" plate stands in. */}
           <Img
             src="/hero.jpg"
-            alt="The Builder Economy episode one cover"
+            alt="Krish Raja recording episode one of The Builder Economy in Miami"
             fallbackTone="butter"
             fallbackLabel="01"
-            wrapperClassName="absolute inset-0 border-[6px] border-ink"
+            wrapperClassName="absolute inset-0 border-[6px] border-ink shadow-brutal-mint"
             className="absolute inset-0 w-full h-full object-cover"
           />
-          <span className="absolute -bottom-3 -left-3 small-caps text-[10px] bg-butter text-ink px-2 py-1">
-            EP. 01 · 2026
+          <span className="absolute -bottom-3 -left-3 small-caps text-[10px] bg-butter text-ink px-3 py-1.5 font-semibold tracking-[0.18em]">
+            EP. 01 · MIAMI
           </span>
         </motion.div>
       </div>
