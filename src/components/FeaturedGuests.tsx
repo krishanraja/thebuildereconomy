@@ -55,7 +55,7 @@ export const FeaturedGuests = () => {
             </h2>
           </div>
           <p className="text-cream/60 small-caps text-xs">
-            {guests.length} BUILDERS · 2026
+            SEASON ONE · 2026
           </p>
         </div>
 

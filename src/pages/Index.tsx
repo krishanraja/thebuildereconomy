@@ -16,35 +16,23 @@ const GuestApplicationModal = lazy(() =>
   import("@/components/GuestApplicationModal").then((m) => ({ default: m.GuestApplicationModal })),
 );
 
-// Editorial rivers between sections — each carries a different rhythm.
-const HERO_RIVER = [
-  "FOUNDERS",
-  "CREATORS",
-  "INVESTORS",
-  "OPERATORS",
-  "BUILDERS",
-  "ENGINEERS",
-  "DESIGNERS",
-  "WEIRDOS",
-  "OUTSIDERS",
-  "2026",
-];
-
-const ABOUT_RIVER = [
-  "Built with AI",
-  "Shipped this week",
-  "No keynote-speak",
-  "The receipts",
-  "Ship it",
-  "Talk to us",
-];
-
-const ROSTER_RIVER = [
-  "ON TAPE",
-  "ON RECORD",
-  "ON THE SHOW",
-  "BUILDING IN PUBLIC",
-  "EP. 01 →",
+// Single editorial river. Real guest names alternating with companies.
+// Companies fall on odd indices and get the butter swipe via highlightEvery={2}.
+const GUEST_RIVER = [
+  "Tom Chavez",
+  "Superlinear",
+  "Jill Randell",
+  "Eyeo",
+  "Michael Lacorazza",
+  "Wells Fargo",
+  "Ian Maier",
+  "Permutive",
+  "Beau Avril",
+  "Google",
+  "Max Snow",
+  "Dave Rosner",
+  "Riley Brown",
+  "Vibe Coder",
 ];
 
 const Index = () => {
@@ -58,15 +46,13 @@ const Index = () => {
       <main>
         <Hero onApplyClick={() => setApplicationModalOpen(true)} />
 
-        <MarqueeRiver items={HERO_RIVER} tone="ink-deep" speed="normal" highlightEvery={5} />
+        <MarqueeRiver items={GUEST_RIVER} tone="ink-deep" speed="slow" highlightEvery={2} serif />
 
         <ErrorBoundary>
           <Suspense fallback={null}>
             <About />
           </Suspense>
         </ErrorBoundary>
-
-        <MarqueeRiver items={ABOUT_RIVER} tone="cream" speed="slow" highlightEvery={4} serif />
 
         <ErrorBoundary>
           <Suspense fallback={null}>
@@ -86,19 +72,19 @@ const Index = () => {
           </Suspense>
         </ErrorBoundary>
 
-        <MarqueeRiver items={ROSTER_RIVER} tone="ink" speed="fast" highlightEvery={3} />
-
         <ErrorBoundary>
           <Suspense fallback={null}>
             <Episodes />
           </Suspense>
         </ErrorBoundary>
 
+        {/* Hidden until 4+ approved testimonials exist in Supabase
         <ErrorBoundary>
           <Suspense fallback={null}>
             <Testimonials />
           </Suspense>
         </ErrorBoundary>
+        */}
       </main>
 
       <ErrorBoundary>

@@ -5,7 +5,7 @@ const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL;
 const SUPABASE_PUBLISHABLE_KEY = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
 
 // Lazily construct the real client on first property access. If env vars are
-// missing at build time we don't throw at module load — that would unmount the
+// missing at build time we don't throw at module load. That would unmount the
 // whole React tree, since lazy-loaded components import this file at the top.
 // Throwing later (when a query actually runs) lets React Query catch the error
 // and the rest of the page continues to render.

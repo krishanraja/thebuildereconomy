@@ -97,7 +97,7 @@ export const Testimonials = () => {
                   <span className="text-butter ml-1">&rdquo;</span>
                 </blockquote>
                 <figcaption className="mt-6 small-caps text-xs text-cream/70">
-                  — {t.author}
+                  {t.author}
                   {t.role && <span className="text-cream/50"> · {t.role}</span>}
                 </figcaption>
               </figure>
@@ -111,7 +111,7 @@ export const Testimonials = () => {
 
 /**
  * Highlight the longest 1–3 word phrase that doesn't span more than 22 chars
- * with a butter swipe. Heuristic, not perfect — but punchier than uniform copy.
+ * with a butter swipe. Heuristic, not perfect, but punchier than uniform copy.
  */
 const highlightQuote = (quote: string): React.ReactNode => {
   const words = quote.split(" ");

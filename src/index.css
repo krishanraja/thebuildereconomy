@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 /* Editorial / bold-block design system. Ink + mint spine, cream + butter + coral
-   highlighters. All colors HSL. Each accent has a defined job — never use butter
+   highlighters. All colors HSL. Each accent has a defined job. Never use butter
    and coral in the same viewport. */
 
 @layer base {
@@ -90,7 +90,7 @@
 }
 
 @layer utilities {
-  /* Block colour utilities — sections commit to one tone */
+  /* Block colour utilities. Sections commit to one tone */
   .block-ink      { background: hsl(var(--ink));      color: hsl(var(--cream)); }
   .block-ink-deep { background: hsl(var(--ink-deep)); color: hsl(var(--cream)); }
   .block-mint     { background: hsl(var(--mint));     color: hsl(var(--ink));   }
@@ -119,7 +119,7 @@
     letter-spacing: 0.14em;
   }
 
-  /* Highlighter swipes — chunky block behind a word */
+  /* Highlighter swipes. Chunky block behind a word */
   .swipe-mint, .swipe-butter, .swipe-coral {
     position: relative;
     display: inline-block;

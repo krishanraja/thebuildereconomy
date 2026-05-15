@@ -80,31 +80,17 @@ export const Host = () => {
             transition={{ duration: 0.7, delay: 0.25 }}
           >
             <p>
-              AI product builder. Advisor to some of the largest companies on earth on how to use AI without lighting money on fire. Founder of Mindmaker, where he runs 1:1 AI decision sprints for senior leaders at Series B and up.
+              AI product builder. Advisor to some of the largest companies on earth on how to use AI without lighting money on fire. Founder of Mindmaker, where he runs commercial AI sprints for senior leaders at Series B and up.
             </p>
             <p>
-              He&apos;s shipped AI products, engines, and clones — and spent years across the table from executives making decisions that don&apos;t make it into the press release.
+              He&apos;s shipped AI products, agent fleets, and identity infrastructure. The Builder Economy is where the conversations he has off the record go public.
             </p>
           </motion.div>
-
-          <motion.p
-            className="display-serif italic text-ink text-2xl md:text-3xl mb-10 max-w-xl"
-            initial={{ opacity: 0, y: 20 }}
-            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.7, delay: 0.4 }}
-          >
-            The Builder Economy is where those conversations go{" "}
-            <span className="relative inline-block group">
-              <span>public</span>
-              <span className="absolute left-0 right-0 -bottom-1 h-1 bg-coral origin-left scale-x-0 group-hover:scale-x-100 transition-transform duration-300" />
-            </span>
-            .
-          </motion.p>
 
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
-            transition={{ duration: 0.7, delay: 0.5 }}
+            transition={{ duration: 0.7, delay: 0.4 }}
           >
             <MagneticButton>
               <Button
