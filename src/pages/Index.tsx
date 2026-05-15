@@ -3,6 +3,7 @@ import { Header } from "@/components/Header";
 import { Hero } from "@/components/Hero";
 import { CustomCursor } from "@/components/CustomCursor";
 import { MarqueeRiver } from "@/components/MarqueeRiver";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const About = lazy(() => import("@/components/About").then((m) => ({ default: m.About })));
 const Host = lazy(() => import("@/components/Host").then((m) => ({ default: m.Host })));
@@ -59,45 +60,61 @@ const Index = () => {
 
         <MarqueeRiver items={HERO_RIVER} tone="ink-deep" speed="normal" highlightEvery={5} />
 
-        <Suspense fallback={null}>
-          <About />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <About />
+          </Suspense>
+        </ErrorBoundary>
 
         <MarqueeRiver items={ABOUT_RIVER} tone="cream" speed="slow" highlightEvery={4} serif />
 
-        <Suspense fallback={null}>
-          <Host />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <Host />
+          </Suspense>
+        </ErrorBoundary>
 
-        <Suspense fallback={null}>
-          <GuestCTA onApplyClick={() => setApplicationModalOpen(true)} />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <GuestCTA onApplyClick={() => setApplicationModalOpen(true)} />
+          </Suspense>
+        </ErrorBoundary>
 
-        <Suspense fallback={null}>
-          <FeaturedGuests />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <FeaturedGuests />
+          </Suspense>
+        </ErrorBoundary>
 
         <MarqueeRiver items={ROSTER_RIVER} tone="ink" speed="fast" highlightEvery={3} />
 
-        <Suspense fallback={null}>
-          <Episodes />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <Episodes />
+          </Suspense>
+        </ErrorBoundary>
 
-        <Suspense fallback={null}>
-          <Testimonials />
-        </Suspense>
+        <ErrorBoundary>
+          <Suspense fallback={null}>
+            <Testimonials />
+          </Suspense>
+        </ErrorBoundary>
       </main>
 
-      <Suspense fallback={null}>
-        <Footer />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <Footer />
+        </Suspense>
+      </ErrorBoundary>
 
-      <Suspense fallback={null}>
-        <GuestApplicationModal
-          open={applicationModalOpen}
-          onOpenChange={setApplicationModalOpen}
-        />
-      </Suspense>
+      <ErrorBoundary>
+        <Suspense fallback={null}>
+          <GuestApplicationModal
+            open={applicationModalOpen}
+            onOpenChange={setApplicationModalOpen}
+          />
+        </Suspense>
+      </ErrorBoundary>
     </div>
   );
 };
