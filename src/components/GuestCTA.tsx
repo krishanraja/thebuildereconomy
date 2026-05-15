@@ -33,14 +33,12 @@ export const GuestCTA = ({ onApplyClick }: GuestCTAProps) => {
           </motion.div>
 
           <motion.h2
-            className="display-serif text-ink text-[clamp(2.75rem,8vw,7.5rem)] leading-[0.92] mb-8 text-balance"
+            className="display-serif text-ink text-[clamp(2.25rem,5.25vw,4.75rem)] leading-[1.04] mb-8 text-balance"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <span className="block">Built something that</span>
-            <span className="block">actually <em className="italic">works</em>?</span>
-            <span className="block">Come talk about it.</span>
+            Built something that actually works? Come talk about it.
           </motion.h2>
 
           <motion.p

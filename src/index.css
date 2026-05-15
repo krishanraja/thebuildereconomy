@@ -158,3 +158,10 @@
     .reduce-motion-static { transform: none !important; }
   }
 }
+
+/* Marquee keyframes live here (not in tailwind.config) so the rule is never
+   purged. The MarqueeRiver component references this by name via inline style. */
+@keyframes marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}

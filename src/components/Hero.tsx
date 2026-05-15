@@ -19,8 +19,7 @@ interface HeroProps {
 }
 
 const headlineLineOneWords = ["Anyone", "can", "build", "now."];
-const headlineLineTwoWords = ["This", "is", "what", "they're"];
-const headlineLineTwoKeyword = "building.";
+const headlineLineTwoWords = ["This", "is", "what", "they're", "building."];
 
 const wordVariants = {
   hidden: { opacity: 0, y: 80, filter: "blur(16px)" },
@@ -56,9 +55,9 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             <span>A new podcast · launching 2026</span>
           </motion.div>
 
-          {/* Display headline. Line 1 */}
+          {/* Display headline. Sized to fit the viewport without sprawling. */}
           <motion.h1
-            className="display-serif text-cream text-[clamp(3rem,9vw,8.5rem)] mb-2 text-balance"
+            className="display-serif text-cream text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1.02] mb-3 text-balance"
             variants={lineContainer(0.55)}
             initial="hidden"
             animate="visible"
@@ -70,9 +69,8 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             ))}
           </motion.h1>
 
-          {/* Display headline. Line 2 */}
           <motion.h2
-            className="display-serif text-cream text-[clamp(3rem,9vw,8.5rem)] mb-10 md:mb-14 text-balance"
+            className="display-serif text-cream/70 text-[clamp(2.25rem,5.5vw,4.75rem)] leading-[1.02] mb-10 md:mb-12 text-balance"
             variants={lineContainer(0.85)}
             initial="hidden"
             animate="visible"
@@ -82,9 +80,6 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
                 {w}
               </motion.span>
             ))}
-            <motion.span className="inline-block" variants={wordVariants}>
-              <span className="swipe-mint italic text-ink font-bold">{headlineLineTwoKeyword}</span>
-            </motion.span>
           </motion.h2>
 
           {/* Sub */}
@@ -175,8 +170,11 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 1, delay: 0.6, ease: [0.25, 0.46, 0.45, 0.94] }}
         >
+          {/* Drop-in image slot. Save a JPG to /public/hero.jpg (recommended
+              1600x2000, portrait orientation) and it renders here automatically.
+              Until then, the butter "01" plate stands in. */}
           <Img
-            src="/images/hero/hero-portrait.jpg"
+            src="/hero.jpg"
             alt="The Builder Economy episode one cover"
             fallbackTone="butter"
             fallbackLabel="01"

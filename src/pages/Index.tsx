@@ -16,23 +16,15 @@ const GuestApplicationModal = lazy(() =>
   import("@/components/GuestApplicationModal").then((m) => ({ default: m.GuestApplicationModal })),
 );
 
-// Single editorial river. Real guest names alternating with companies.
-// Companies fall on odd indices and get the butter swipe via highlightEvery={2}.
-const GUEST_RIVER = [
-  "Tom Chavez",
-  "Superlinear",
-  "Jill Randell",
-  "Eyeo",
-  "Michael Lacorazza",
-  "Wells Fargo",
-  "Ian Maier",
-  "Permutive",
-  "Beau Avril",
-  "Google",
-  "Max Snow",
-  "Dave Rosner",
-  "Riley Brown",
-  "Vibe Coder",
+// Status ticker. Says what the show is, not who's been on it (the show hasn't
+// aired yet — name-drops from prior projects would read as bragging).
+const STATUS_RIVER = [
+  "A new podcast",
+  "Launching 2026",
+  "New episode every Tuesday",
+  "Built with AI",
+  "Shipped this week",
+  "On the record",
 ];
 
 const Index = () => {
@@ -46,7 +38,7 @@ const Index = () => {
       <main>
         <Hero onApplyClick={() => setApplicationModalOpen(true)} />
 
-        <MarqueeRiver items={GUEST_RIVER} tone="ink-deep" speed="slow" highlightEvery={2} serif />
+        <MarqueeRiver items={STATUS_RIVER} tone="ink-deep" speed="slow" highlightEvery={3} serif />
 
         <ErrorBoundary>
           <Suspense fallback={null}>
