@@ -1,11 +1,8 @@
 /**
- * Horizontal auto-scrolling marquee. Used between sections as an editorial river.
- * Speed scales with scroll velocity (signature colinandsamir interaction).
- * Each Nth item gets a butter highlight pill for accent.
+ * Horizontal auto-scrolling marquee. Pure CSS animation — the @keyframes rule
+ * lives in src/index.css so Tailwind's purge never strips it. The items array
+ * is duplicated and translated to -50% for a seamless loop.
  */
-
-import { useEffect, useRef } from "react";
-import { motion, useScroll, useVelocity, useTransform, useSpring } from "framer-motion";
 
 export type MarqueeTone = "ink" | "ink-deep" | "mint" | "mint-deep" | "cream" | "coral";
 
@@ -41,28 +38,11 @@ export const MarqueeRiver = ({
   serif = false,
   className = "",
 }: MarqueeRiverProps) => {
-  const trackRef = useRef<HTMLDivElement>(null);
-  const { scrollY } = useScroll();
-  const scrollVelocity = useVelocity(scrollY);
-  const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
-  // Map velocity → speed multiplier (1 = base, faster while scrolling)
-  const velocityFactor = useTransform(smoothVelocity, [-1500, 0, 1500], [1.6, 1, 1.6], { clamp: true });
-
-  useEffect(() => {
-    const track = trackRef.current;
-    if (!track) return;
-    const unsub = velocityFactor.on("change", (v) => {
-      track.style.animationDuration = `${baseDuration[speed] / Math.max(0.5, v)}s`;
-    });
-    return () => unsub();
-  }, [velocityFactor, speed]);
-
   const duplicated = [...items, ...items];
 
   return (
     <div className={`w-full overflow-hidden py-5 border-y border-current/10 ${toneClass[tone]} ${className}`}>
       <div
-        ref={trackRef}
         className="marquee-track flex whitespace-nowrap will-change-transform"
         style={{
           animation: `marquee ${baseDuration[speed]}s linear infinite`,

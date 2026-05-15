@@ -34,23 +34,30 @@ export const Header = () => {
           />
         </a>
 
-        {/* Producer credit lockup */}
+        {/* Producer credit lockup. The Mindmaker mark sits inline in place of
+            the word — "A [mark] production" — so the word never has to appear.
+            The PNG has the icon in the bottom-left quadrant of a 1200x630 canvas
+            with empty whitespace around it; the background-image crop below
+            zooms into just the icon so it reads at a useful size. */}
         <a
           href="https://www.themindmaker.ai"
           target="_blank"
           rel="noopener noreferrer"
-          className="hidden sm:flex items-center gap-2 pl-4 md:pl-5 border-l border-cream/20 group"
+          className="hidden sm:flex items-center gap-3 pl-4 md:pl-5 border-l border-cream/20 group opacity-70 hover:opacity-100 transition-opacity"
           aria-label="A Mindmaker production"
         >
-          <span className="small-caps text-[10px] text-cream/60 group-hover:text-cream transition-colors">
-            A Mindmaker production
-          </span>
-          <img
-            src={mindmakerLogo}
-            alt=""
-            className="h-5 md:h-6 w-auto opacity-60 group-hover:opacity-100 transition-opacity"
-            loading="eager"
+          <span className="small-caps text-[11px] md:text-[13px] text-cream tracking-[0.2em]">A</span>
+          <span
+            className="inline-block h-9 md:h-11 aspect-square bg-no-repeat"
+            style={{
+              backgroundImage: `url(${mindmakerLogo})`,
+              backgroundSize: "auto 320%",
+              backgroundPosition: "11% 53%",
+            }}
+            role="img"
+            aria-label="Mindmaker"
           />
+          <span className="small-caps text-[11px] md:text-[13px] text-cream tracking-[0.2em]">production</span>
         </a>
       </div>
     </header>

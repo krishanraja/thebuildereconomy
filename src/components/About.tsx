@@ -29,7 +29,7 @@ export const About = () => {
         <div className="grid md:grid-cols-[1.2fr_1fr] gap-12 md:gap-20 items-start">
           {/* Display pull-quote */}
           <motion.h2
-            className="display-serif text-ink text-[clamp(2.5rem,7vw,7rem)] leading-[0.92]"
+            className="display-serif text-ink text-[clamp(2rem,4.75vw,4.25rem)] leading-[1.02] text-balance"
             initial={{ opacity: 0, y: 40 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 40 }}
             transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
@@ -42,11 +42,14 @@ export const About = () => {
 
           {/* Right: body + sticky-pin sidekick */}
           <div className="md:pt-8">
+            {/* Drop-in image slot. Save a JPG to /public/ship.jpg (recommended
+                1000x1250, portrait orientation) and it renders here. Until then,
+                a mint-deep "SHIP" plate stands in. */}
             <div className="md:sticky md:top-24 hidden md:block mb-8 aspect-[4/5] max-w-[280px]">
               <Img
-                src="/images/about/about-collage-1.jpg"
+                src="/ship.jpg"
                 alt="A builder shipping"
-                fallbackTone="ink"
+                fallbackTone="mint-deep"
                 fallbackLabel="SHIP"
                 wrapperClassName="absolute inset-0 shadow-brutal"
                 className="absolute inset-0 w-full h-full object-cover shadow-brutal"
