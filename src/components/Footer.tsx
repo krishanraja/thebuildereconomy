@@ -12,7 +12,7 @@ export const Footer = () => {
       <div className="max-w-[1400px] mx-auto px-6 md:px-10 pt-20 md:pt-28 pb-10">
         {/* Oversized wordmark */}
         <div className="border-t border-cream/15 pt-10 md:pt-14 mb-12 md:mb-16">
-          <h3 className="display-serif text-cream text-[clamp(3.5rem,15vw,15rem)] leading-[0.85] tracking-tight">
+          <h3 className="display-serif text-cream text-[clamp(3.5rem,15vw,15rem)] leading-[0.85] tracking-tight text-balance">
             THE{" "}
             <span className="relative inline-block">
               <span className="relative z-10">BUILDER</span>
@@ -27,7 +27,7 @@ export const Footer = () => {
           {/* Tagline + small print */}
           <div className="space-y-4 max-w-md">
             <p className="small-caps text-xs text-cream/60">
-              A SHOW BY KRISH RAJA · MINDMAKER · NEW YORK · 2026 —
+              A SHOW BY KRISH RAJA · A MINDMAKER PRODUCTION · NEW YORK · 2026
             </p>
             <p className="text-cream/40 text-xs">
               © {new Date().getFullYear()} The Builder Economy. All rights reserved. A Mindmaker LLC product.

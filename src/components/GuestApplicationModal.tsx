@@ -238,7 +238,7 @@ export const GuestApplicationModal = ({ open, onOpenChange }: GuestApplicationMo
               id="how_using_ai"
               value={formData.how_using_ai}
               onChange={(e) => update("how_using_ai", e.target.value)}
-              placeholder="Be specific — what models, tools, or workflows?"
+              placeholder="Be specific. What models, tools, or workflows?"
               className="min-h-[44px]"
               required
             />
@@ -247,7 +247,7 @@ export const GuestApplicationModal = ({ open, onOpenChange }: GuestApplicationMo
           {/* 4. Surprise insight */}
           <motion.div variants={fieldVariants} className="space-y-2">
             <Label htmlFor="surprise_insight">
-              What's one thing about building with AI that surprised you — that most people aren't talking about? *
+              What's one thing about building with AI that surprised you, that most people aren't talking about? *
             </Label>
             <Textarea
               id="surprise_insight"
@@ -287,7 +287,7 @@ export const GuestApplicationModal = ({ open, onOpenChange }: GuestApplicationMo
           {/* 6. Drop a link */}
           <motion.div variants={fieldVariants} className="space-y-2">
             <Label htmlFor="product_link">Drop a link</Label>
-            <p className="text-xs text-muted-foreground">Website, app, product — anything live. Optional.</p>
+            <p className="text-xs text-muted-foreground">Website, app, product. Anything live. Optional.</p>
             <Input
               id="product_link"
               value={formData.product_link}
@@ -312,7 +312,7 @@ export const GuestApplicationModal = ({ open, onOpenChange }: GuestApplicationMo
             />
           </motion.div>
 
-          {/* Submit — sticky on mobile */}
+          {/* Submit. Sticky on mobile */}
           <motion.div
             variants={fieldVariants}
             className="fixed bottom-0 left-0 right-0 p-4 bg-background/95 backdrop-blur border-t border-border md:relative md:p-0 md:bg-transparent md:border-0 md:backdrop-blur-none z-50"

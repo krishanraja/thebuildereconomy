@@ -73,7 +73,7 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "The Builder Economy <krish@themindmaker.ai>",
         to: ["krish@themindmaker.ai"],
-        subject: `🎙️ New Guest Application (Builder Economy) — ${escapeHtml(app.full_name)}`,
+        subject: `🎙️ New Guest Application (Builder Economy) · ${escapeHtml(app.full_name)}`,
         html: `
           <h2>New Guest Application</h2>
           <table style="border-collapse:collapse;width:100%;max-width:600px;">
@@ -106,7 +106,7 @@ const handler = async (req: Request): Promise<Response> => {
           <h2>Hi ${s(app.full_name)},</h2>
           <p>Thanks for applying to be a guest on The Builder Economy. I love that you're building <strong>${s(app.what_building)}</strong>.</p>
           <p>I'll review your application and get back to you soon.</p>
-          <p>— Krish</p>
+          <p>Krish</p>
         `,
       }),
     });

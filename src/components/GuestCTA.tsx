@@ -33,14 +33,14 @@ export const GuestCTA = ({ onApplyClick }: GuestCTAProps) => {
           </motion.div>
 
           <motion.h2
-            className="display-serif text-ink text-[clamp(2.75rem,8vw,7.5rem)] leading-[0.92] mb-8"
+            className="display-serif text-ink text-[clamp(2.75rem,8vw,7.5rem)] leading-[0.92] mb-8 text-balance"
             initial={{ opacity: 0, y: 30 }}
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
             transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            Built something that actually <span className="italic">works</span>?
-            <br />
-            Come talk about it.
+            <span className="block">Built something that</span>
+            <span className="block">actually <em className="italic">works</em>?</span>
+            <span className="block">Come talk about it.</span>
           </motion.h2>
 
           <motion.p
@@ -49,7 +49,7 @@ export const GuestCTA = ({ onApplyClick }: GuestCTAProps) => {
             animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
             transition={{ duration: 0.7, delay: 0.2 }}
           >
-            We book builders shipping real products with AI — and willing to be honest about what it actually took. No keynote-speak. No victory laps. The receipts.
+            We book builders shipping real products with AI. We don&apos;t want the keynote version. We want what actually broke, what worked, and what you wish you&apos;d known three months ago.
           </motion.p>
 
           <motion.div

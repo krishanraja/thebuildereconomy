@@ -1,5 +1,5 @@
 /**
- * Magnetic hover wrapper — translates children toward the cursor on hover.
+ * Magnetic hover wrapper. Translates children toward the cursor on hover.
  * No-op on touch / reduced-motion.
  */
 

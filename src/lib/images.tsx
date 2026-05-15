@@ -4,7 +4,7 @@
  * Resolution order:
  *   1. `src` (e.g. /images/host/krish-portrait.jpg)
  *   2. `fallbackSrc` (e.g. an imported asset already in the repo)
- *   3. typographic poster — solid block in the section tone, alt text in display serif
+ *   3. typographic poster. Solid block in the section tone, alt text in display serif
  *
  * This lets the layout ship before real photography is dropped into
  * public/images/. See public/images/README.md for the expected file paths.

@@ -46,7 +46,7 @@ export const MarqueeRiver = ({
   const scrollVelocity = useVelocity(scrollY);
   const smoothVelocity = useSpring(scrollVelocity, { damping: 50, stiffness: 400 });
   // Map velocity → speed multiplier (1 = base, faster while scrolling)
-  const velocityFactor = useTransform(smoothVelocity, [-2000, 0, 2000], [3, 1, 3], { clamp: true });
+  const velocityFactor = useTransform(smoothVelocity, [-1500, 0, 1500], [1.6, 1, 1.6], { clamp: true });
 
   useEffect(() => {
     const track = trackRef.current;

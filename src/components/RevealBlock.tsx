@@ -1,5 +1,5 @@
 /**
- * Section reveal wrapper — clip-path mask wipe on enter.
+ * Section reveal wrapper. Clip-path mask wipe on enter.
  * Replaces the default y/opacity reveal with a sweeping cinematic wipe.
  */
 

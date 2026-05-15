@@ -1,9 +1,9 @@
 /**
  * @file Hero.tsx
- * @description Editorial hero — ink block, oversized display serif, magnetic CTAs,
- * mint highlighter swipe behind the keyword. Right column reserved for an
- * editorial portrait that falls back to a typographic poster when the image
- * isn't dropped in yet.
+ * @description Editorial hero. Ink block, oversized display serif, magnetic CTAs,
+ * mint highlighter swipe behind the payoff word. Right column reserves an
+ * editorial cover that falls back to a butter Episode 01 plate until a real
+ * portrait or cover image is dropped in.
  */
 
 import { motion } from "framer-motion";
@@ -18,10 +18,9 @@ interface HeroProps {
   onApplyClick: () => void;
 }
 
-const headlineTopWords = ["Everyone", "can"];
-const headlineKeyword = "build";
-const headlineRest = ["now."];
-const headlineLineTwo = ["The", "good", "ones", "know", "how."];
+const headlineLineOneWords = ["Anyone", "can", "build", "now."];
+const headlineLineTwoWords = ["This", "is", "what", "they're"];
+const headlineLineTwoKeyword = "building.";
 
 const wordVariants = {
   hidden: { opacity: 0, y: 80, filter: "blur(16px)" },
@@ -54,59 +53,38 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             transition={{ duration: 0.6, delay: 0.2 }}
           >
             <span className="h-px w-10 bg-butter" />
-            <span>A podcast for the people building with AI</span>
+            <span>A new podcast · launching 2026</span>
           </motion.div>
 
-          {/* Logo */}
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.7, delay: 0.3 }}
-            className="mb-8 md:mb-10"
-          >
-            <img
-              src="/builder3.png"
-              alt="The Builder Economy"
-              className="h-24 md:h-36 w-auto"
-              loading="eager"
-              fetchPriority="high"
-            />
-          </motion.div>
-
-          {/* Display headline — line 1 */}
+          {/* Display headline. Line 1 */}
           <motion.h1
-            className="display-serif text-cream text-[clamp(3rem,9vw,8.5rem)] mb-2"
+            className="display-serif text-cream text-[clamp(3rem,9vw,8.5rem)] mb-2 text-balance"
             variants={lineContainer(0.55)}
             initial="hidden"
             animate="visible"
           >
-            {headlineTopWords.map((w, i) => (
-              <motion.span key={i} className="inline-block mr-[0.25em]" variants={wordVariants}>
-                {w}
-              </motion.span>
-            ))}
-            <motion.span className="inline-block mr-[0.15em]" variants={wordVariants}>
-              <span className="swipe-mint italic text-ink font-bold">{headlineKeyword}</span>
-            </motion.span>
-            {headlineRest.map((w, i) => (
+            {headlineLineOneWords.map((w, i) => (
               <motion.span key={i} className="inline-block mr-[0.25em]" variants={wordVariants}>
                 {w}
               </motion.span>
             ))}
           </motion.h1>
 
-          {/* Display headline — line 2 */}
+          {/* Display headline. Line 2 */}
           <motion.h2
-            className="display-serif text-cream/70 text-[clamp(2rem,6vw,5.5rem)] mb-10 md:mb-14"
+            className="display-serif text-cream text-[clamp(3rem,9vw,8.5rem)] mb-10 md:mb-14 text-balance"
             variants={lineContainer(0.85)}
             initial="hidden"
             animate="visible"
           >
-            {headlineLineTwo.map((w, i) => (
+            {headlineLineTwoWords.map((w, i) => (
               <motion.span key={i} className="inline-block mr-[0.25em]" variants={wordVariants}>
                 {w}
               </motion.span>
             ))}
+            <motion.span className="inline-block" variants={wordVariants}>
+              <span className="swipe-mint italic text-ink font-bold">{headlineLineTwoKeyword}</span>
+            </motion.span>
           </motion.h2>
 
           {/* Sub */}
@@ -116,7 +94,8 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.1 }}
           >
-            The show for the operators turning ideas into shipped products — and saying out loud how they actually did it.
+            A weekly conversation with the founders, solo operators and first-timers
+            shipping real businesses with AI. Hosted by Krish Raja.
           </motion.p>
 
           {/* CTAs */}
@@ -189,7 +168,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
           </motion.div>
         </div>
 
-        {/* Right: editorial portrait slot */}
+        {/* Right: editorial cover slot */}
         <motion.div
           className="hidden md:block relative aspect-[4/5] w-full"
           initial={{ opacity: 0, scale: 0.96 }}
@@ -198,14 +177,14 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
         >
           <Img
             src="/images/hero/hero-portrait.jpg"
-            alt="The Builder Economy portrait"
-            fallbackTone="ink-deep"
-            fallbackLabel="THE / BUILDER / ECONOMY"
-            wrapperClassName="absolute inset-0 border border-cream/15"
+            alt="The Builder Economy episode one cover"
+            fallbackTone="butter"
+            fallbackLabel="01"
+            wrapperClassName="absolute inset-0 border-[6px] border-ink"
             className="absolute inset-0 w-full h-full object-cover"
           />
           <span className="absolute -bottom-3 -left-3 small-caps text-[10px] bg-butter text-ink px-2 py-1">
-            EP. 01 — 2026
+            EP. 01 · 2026
           </span>
         </motion.div>
       </div>

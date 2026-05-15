@@ -62,7 +62,7 @@ export const Episodes = () => {
             </h2>
           </div>
           <p className="small-caps text-xs text-ink/60">
-            {episodes.length} ON THE TAPE — UPDATED WEEKLY
+            EP. 01 LANDS SOON
           </p>
         </div>
 
