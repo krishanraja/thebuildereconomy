@@ -25,9 +25,9 @@ export const Header = () => {
         {/* Builder Economy primary mark */}
         <a href="/" className="block shrink-0" aria-label="The Builder Economy">
           <img
-            src="/tbe-white-3.png"
+            src="/tbe-green-3.png"
             alt="The Builder Economy"
-            className="h-9 md:h-12 w-auto"
+            className="h-14 md:h-20 w-auto"
             loading="eager"
             fetchPriority="high"
           />
@@ -46,7 +46,7 @@ export const Header = () => {
           <img
             src="/mmicon.png"
             alt="Mindmaker"
-            className="h-9 md:h-11 w-auto"
+            className="h-6 md:h-8 w-auto"
             loading="eager"
           />
           <span className="small-caps text-[11px] md:text-[13px] text-cream tracking-[0.2em]">production</span>
