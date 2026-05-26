@@ -5,7 +5,6 @@
  */
 
 import { useEffect, useState } from "react";
-import mindmakerLogo from "@/assets/mindmaker-logo.png";
 
 export const Header = () => {
   const [scrolled, setScrolled] = useState(false);
@@ -26,7 +25,7 @@ export const Header = () => {
         {/* Builder Economy primary mark */}
         <a href="/" className="block shrink-0" aria-label="The Builder Economy">
           <img
-            src="/builder4.png"
+            src="/tbe-white-3.png"
             alt="The Builder Economy"
             className="h-9 md:h-12 w-auto"
             loading="eager"
@@ -35,10 +34,7 @@ export const Header = () => {
         </a>
 
         {/* Producer credit lockup. The Mindmaker mark sits inline in place of
-            the word — "A [mark] production" — so the word never has to appear.
-            The PNG has the icon in the bottom-left quadrant of a 1200x630 canvas
-            with empty whitespace around it; the background-image crop below
-            zooms into just the icon so it reads at a useful size. */}
+            the word — "A [mark] production" — so the word never has to appear. */}
         <a
           href="https://www.themindmaker.ai"
           target="_blank"
@@ -47,15 +43,11 @@ export const Header = () => {
           aria-label="A Mindmaker production"
         >
           <span className="small-caps text-[11px] md:text-[13px] text-cream tracking-[0.2em]">A</span>
-          <span
-            className="inline-block h-9 md:h-11 aspect-square bg-no-repeat"
-            style={{
-              backgroundImage: `url(${mindmakerLogo})`,
-              backgroundSize: "auto 320%",
-              backgroundPosition: "11% 53%",
-            }}
-            role="img"
-            aria-label="Mindmaker"
+          <img
+            src="/mmicon.png"
+            alt="Mindmaker"
+            className="h-9 md:h-11 w-auto"
+            loading="eager"
           />
           <span className="small-caps text-[11px] md:text-[13px] text-cream tracking-[0.2em]">production</span>
         </a>
