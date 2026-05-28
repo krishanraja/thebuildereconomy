@@ -1,17 +1,21 @@
 # PROJECT NOTES
 
 > Running decisions log for The Builder Economy project.
-> Updated: 2025-12-09
+> Updated: 2026-05-28
 
 ---
 
 ## Project Overview
 
 **The Builder Economy** is a podcast landing page and community platform for people building with AI. It features:
-- Hero section with podcast branding
-- Guest application flow (form → database → email notifications)
-- Newsletter subscription (email → database → welcome email)
-- Featured guests, episodes, testimonials sections
+- Editorial hero with inline email capture (NotifyForm)
+- Guest application flow (7-field form → database → email notifications)
+- Newsletter signup (NotifyForm in Hero + Subscribe → database → welcome email)
+- About, Host, Guest CTA, featured guests, episodes sections
+
+Editorial mission and guest casting criteria now live in `docs/MANIFESTO.md` and
+`docs/GUEST_BRIEF.md`. The brief is written so an AI agent can source ranked
+guest candidates directly from the repo.
 
 ---
 
@@ -68,7 +72,10 @@ See [CHANGELOG.md](../CHANGELOG.md) for detailed change history.
 
 ### Tables
 - `subscribers` - Newsletter signups (email, created_at)
-- `guest_applications` - Guest application submissions
+- `guest_applications` - Guest application submissions (full_name, email,
+  linkedin_url, what_building, how_using_ai, surprise_insight, stage,
+  product_link, takeaway, approved). Legacy columns title_company / topic_pitch
+  / social_link retained for old rows.
 - `episodes` - Podcast episode data
 - `guests` - Featured guest profiles
 - `testimonials` - User testimonials
@@ -93,5 +100,10 @@ See [CHANGELOG.md](../CHANGELOG.md) for detailed change history.
 ## Future Considerations
 
 1. **Authentication**: Not currently implemented. Add if admin dashboard needed.
-2. **Spotify Integration**: Podcast links pending Spotify availability.
+2. **Platform links**: Hero/footer link to Spotify and YouTube placeholders.
+   Swap in real show URLs once the feed is live, and add a platform-buttons row
+   to the hero (noted inline in `Hero.tsx`).
 3. **Analytics**: Consider adding page view tracking.
+4. **AI guest sourcing**: `docs/GUEST_BRIEF.md` defines a rubric and JSON output
+   format. Wiring an agent to read the brief + score the `guest_applications`
+   inbound pile is a natural next step.

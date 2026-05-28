@@ -1,49 +1,54 @@
-import { motion } from "framer-motion";
-import { useInView } from "framer-motion";
+/**
+ * @file Subscribe.tsx
+ * @description Closing email-capture band. Mint block, ink type, inline NotifyForm
+ * (onLight) writing to the subscribers table. Second on-page capture point after
+ * the hero, sitting just above the footer.
+ */
+
+import { motion, useInView } from "framer-motion";
 import { useRef } from "react";
-import { Button } from "./ui/button";
-import { Mail, ArrowUpRight } from "lucide-react";
+import { NotifyForm } from "./NotifyForm";
 
 export const Subscribe = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   return (
-    <section ref={ref} className="py-24 px-4 relative">
-      <motion.div
-        className="max-w-2xl mx-auto text-center"
-        initial={{ opacity: 0, y: 50 }}
-        animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
-        transition={{ duration: 0.8 }}
-      >
-        <div className="glow-effect rounded-2xl p-12 bg-card/50 backdrop-blur border border-primary/20">
-          <Mail className="w-16 h-16 text-primary mx-auto mb-6" />
+    <section ref={ref} className="block-mint relative overflow-hidden">
+      <div className="max-w-[1400px] mx-auto px-6 md:px-10 py-24 md:py-32">
+        <motion.div
+          className="eyebrow text-ink/70 mb-6 flex items-center gap-3"
+          initial={{ opacity: 0, x: -20 }}
+          animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -20 }}
+          transition={{ duration: 0.6 }}
+        >
+          <span className="h-px w-10 bg-ink" />
+          <span>Before it's loud</span>
+        </motion.div>
 
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            Join The <span className="text-gradient">Builder Circle</span>
-          </h2>
-
-          <p className="text-muted-foreground mb-8">
-            Get exclusive insights, early access to episodes, and join a community
-            of pioneers building the future with AI.
-          </p>
-
-          <Button
-            asChild
-            size="lg"
-            className="bg-primary hover:bg-primary/90 glow-effect px-8 py-6 text-lg"
+        <div className="grid md:grid-cols-[1.3fr_1fr] gap-10 md:gap-16 items-end">
+          <motion.h2
+            className="display-serif text-ink text-[clamp(2.25rem,5.25vw,4.75rem)] leading-[1.02] text-balance"
+            initial={{ opacity: 0, y: 30 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+            transition={{ duration: 0.9, ease: [0.25, 0.46, 0.45, 0.94] }}
           >
-            <a
-              href="https://live.themindmaker.ai"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              Join Now
-              <ArrowUpRight className="ml-2 h-5 w-5" />
-            </a>
-          </Button>
+            Hear the first episode before anyone else.
+          </motion.h2>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 20 }}
+            transition={{ duration: 0.7, delay: 0.2 }}
+          >
+            <p className="text-lg text-ink/80 leading-relaxed mb-6">
+              One email when Ep. 01 lands. After that, one most weeks: who we talked
+              to, what they built, what actually worked. Unsubscribe whenever.
+            </p>
+            <NotifyForm tone="onLight" buttonLabel="Notify me" />
+          </motion.div>
         </div>
-      </motion.div>
+      </div>
     </section>
   );
 };

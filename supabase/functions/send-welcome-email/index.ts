@@ -1,7 +1,8 @@
 /**
  * @file send-welcome-email/index.ts
  * @description Edge function to send welcome email to new subscribers via Resend API.
- * @trigger Called from Subscribe.tsx after successful subscriber insert.
+ * @trigger Called from NotifyForm.tsx (used in Hero + Subscribe) after a
+ *          successful subscriber insert.
  * @requires RESEND_API_KEY secret
  * @security Zod validation, HTML sanitization, rate limiting
  */
@@ -106,18 +107,13 @@ const handler = async (req: Request): Promise<Response> => {
       body: JSON.stringify({
         from: "The Builder Economy <krish@themindmaker.ai>",
         to: [subscriber.email],
-        subject: "Welcome to The Builder Circle 🎉",
+        subject: "You're on the list",
         html: `
-          <h1>You're in.</h1>
-          <p>You just joined The Builder Economy, a community for people who create the future with AI.</p>
-          <h2>Start here:</h2>
-          <ol>
-            <li><a href="https://thebuildereconomy.com/ep/origin">Our origin episode</a></li>
-            <li><a href="https://thebuildereconomy.com/ep/tactics">A tactical deep dive</a></li>
-            <li><a href="https://thebuildereconomy.com/ep/vision">A visionary piece</a></li>
-          </ol>
-          <p>Stay tuned for exclusive content, early access to new episodes, and insights from the brightest minds building with AI.</p>
-          <p>Best,<br>Krish Raja<br>The Builder Economy</p>
+          <h1>You're on the list.</h1>
+          <p>The Builder Economy launches in 2026. A weekly conversation with people shipping real products with AI: founders, solo operators, and first-timers.</p>
+          <p>You'll hear from me the day Episode 01 drops. After that, one email most weeks: who we talked to, what they built, and what actually worked.</p>
+          <p>If you're building something yourself, just reply to this email. I read every one.</p>
+          <p>Krish<br>The Builder Economy</p>
         `,
       }),
     });

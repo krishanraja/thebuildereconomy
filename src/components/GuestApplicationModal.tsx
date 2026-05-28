@@ -120,7 +120,7 @@ export const GuestApplicationModal = ({ open, onOpenChange }: GuestApplicationMo
         stage: d.stage,
         product_link: d.product_link || null,
         takeaway: d.takeaway,
-      } as any);
+      });
 
       if (error) throw error;
 
