@@ -63,13 +63,16 @@ export const About = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
             >
               <p>
-                For the first time, the gap between idea and shipped product is almost zero. AI didn&apos;t just change what you can build. It changed who gets to build it.
+                For the first time, the gap between an idea and a product in someone&apos;s hands is almost nothing. AI didn&apos;t just change what you can build. It changed who gets to build it.
               </p>
               <p className="font-medium text-ink">
                 First-time founders. Solo operators. People who&apos;ve never written a line of code.
               </p>
               <p>
-                They&apos;re shipping, growing, and quietly rewriting what entrepreneurship looks like. Each episode, we sit down with one of them and go deep on how they&apos;re actually doing it.
+                The hard part was never the code. It was knowing what&apos;s worth making. Skill stopped being the moat. Taste is.
+              </p>
+              <p>
+                They&apos;re shipping, growing, and quietly rewriting what a company looks like. Every episode, we sit down with one of them and get the real version: what broke, what worked, what they wish they&apos;d known.
               </p>
             </motion.div>
           </div>

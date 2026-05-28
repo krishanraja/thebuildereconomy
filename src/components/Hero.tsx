@@ -8,8 +8,9 @@
 
 import { motion } from "framer-motion";
 import { Button } from "./ui/button";
-import { ArrowUpRight, Bell } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { MagneticButton } from "./MagneticButton";
+import { NotifyForm } from "./NotifyForm";
 import { Img } from "@/lib/images";
 
 interface HeroProps {
@@ -91,31 +92,19 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
             shipping real businesses with AI. Hosted by Krish Raja.
           </motion.p>
 
-          {/* CTAs. Pre-launch the primary action is "notify me", which routes to
-              the existing community signup at live.themindmaker.ai. When Spotify
-              and YouTube URLs are live, swap this for a platform-buttons row. */}
+          {/* CTAs. Primary action is on-page email capture (writes to the
+              subscribers table). When Spotify and YouTube URLs are live, add a
+              platform-buttons row beneath this. */}
           <motion.div
-            className="flex flex-wrap gap-4 md:gap-5 items-center"
+            className="flex flex-col gap-5 items-start"
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.7, delay: 1.3 }}
           >
-            <MagneticButton>
-              <Button
-                asChild
-                size="lg"
-                className="rounded-none bg-mint text-ink hover:bg-mint hover:-translate-y-0.5 hover:shadow-brutal-cream transition-all px-8 py-7 text-base font-semibold"
-              >
-                <a
-                  href="https://live.themindmaker.ai"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <Bell className="mr-2 h-5 w-5" />
-                  Notify me when Ep. 01 drops
-                </a>
-              </Button>
-            </MagneticButton>
+            <div className="w-full">
+              <p className="eyebrow text-cream/60 mb-3">Get Ep. 01 first</p>
+              <NotifyForm tone="onDark" buttonLabel="Notify me" />
+            </div>
 
             <MagneticButton>
               <Button
@@ -124,7 +113,7 @@ export const Hero = ({ onApplyClick }: HeroProps) => {
                 className="rounded-none border-b-2 border-cream/30 hover:border-coral text-cream hover:bg-transparent hover:text-coral px-2 py-6 text-base"
                 onClick={onApplyClick}
               >
-                Apply to be a guest
+                Built something with AI? Come on the show
                 <ArrowUpRight className="ml-1 h-5 w-5" />
               </Button>
             </MagneticButton>

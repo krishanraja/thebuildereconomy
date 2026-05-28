@@ -21,15 +21,33 @@ export interface Subscriber {
 }
 
 /**
- * Guest application form data
+ * Guest stages, as offered in the application form. Mirrors the radio options
+ * in GuestApplicationModal.
+ */
+export type GuestStage =
+  | "Idea"
+  | "Early build"
+  | "Launched, pre-revenue"
+  | "Revenue"
+  | "Scaling";
+
+/**
+ * Guest application record. Mirrors the `guest_applications` table after the
+ * 2026 form rework (see supabase/migrations). The earlier title_company /
+ * topic_pitch / social_link columns still exist in the table for old rows but
+ * are no longer written by the form.
  */
 export interface GuestApplication {
   id?: string;
   full_name: string;
   email: string;
-  title_company?: string | null;
-  topic_pitch?: string | null;
-  social_link?: string | null;
+  linkedin_url?: string | null;
+  what_building?: string | null;
+  how_using_ai?: string | null;
+  surprise_insight?: string | null;
+  stage?: string | null;
+  product_link?: string | null;
+  takeaway?: string | null;
   approved?: boolean | null;
   created_at?: string | null;
 }
@@ -143,14 +161,18 @@ export interface HeroProps {
 // ============================================
 
 /**
- * Guest application form state
+ * Guest application form state (all fields controlled as strings).
  */
 export interface GuestApplicationFormData {
   full_name: string;
   email: string;
-  title_company: string;
-  topic_pitch: string;
-  social_link: string;
+  linkedin_url: string;
+  what_building: string;
+  how_using_ai: string;
+  surprise_insight: string;
+  stage: string;
+  product_link: string;
+  takeaway: string;
 }
 
 /**

@@ -9,17 +9,26 @@
 ```
 App.tsx
 └── Index.tsx (main page)
-    ├── Header.tsx (fixed, scroll-aware)
+    ├── CustomCursor.tsx (hover-capable devices only)
+    ├── Header.tsx (fixed, fades on scroll)
     ├── Hero.tsx (landing section)
-    │   └── GuestApplicationModal.tsx (dialog)
+    │   └── NotifyForm.tsx (inline email capture, tone="onDark")
+    ├── MarqueeRiver.tsx (status ticker)
     ├── About.tsx
-    ├── Episodes.tsx
-    ├── FeaturedGuests.tsx
-    ├── WhoBuilds.tsx
-    ├── Testimonials.tsx
+    ├── Host.tsx
+    ├── GuestCTA.tsx
+    ├── FeaturedGuests.tsx (renders null until approved guests exist)
+    ├── Episodes.tsx (renders null until published episodes exist)
+    ├── Testimonials.tsx (commented out until 4+ approved testimonials)
     ├── Subscribe.tsx
-    └── Footer.tsx
+    │   └── NotifyForm.tsx (inline email capture, tone="onLight")
+    ├── Footer.tsx
+    └── GuestApplicationModal.tsx (opened from Hero + GuestCTA)
 ```
+
+`NotifyForm` is the single shared email-capture component. It writes to
+`subscribers` and fires `send-welcome-email`. The hero and the Subscribe band
+both render it, so the launch list is built on-page rather than off-site.
 
 ---
 
@@ -28,17 +37,17 @@ App.tsx
 ### Newsletter Subscription Flow
 
 ```
-User enters email → Subscribe.tsx
+User enters email → NotifyForm.tsx (rendered in Hero and Subscribe)
     ↓
-handleSubmit() validates email
+submit() validates email with zod
     ↓
 supabase.from("subscribers").insert({ email })
-    ↓ (on success)
-supabase.functions.invoke("send-welcome-email", { body: { email } })
+    ↓ (unique-violation 23505 is treated as success — already on the list)
+supabase.functions.invoke("send-welcome-email", { body: { email } })  [best-effort]
     ↓
 Edge Function → Resend API → Email sent
     ↓
-Toast notification to user
+Inline success state shown in the form
 ```
 
 ### Guest Application Flow
@@ -110,11 +119,19 @@ Response: { success: boolean, adminEmail: object, autoReply: object }
 | id | UUID | PK |
 | full_name | TEXT | NOT NULL |
 | email | TEXT | NOT NULL |
-| title_company | TEXT | nullable |
-| topic_pitch | TEXT | nullable |
-| social_link | TEXT | nullable |
+| linkedin_url | TEXT | nullable |
+| what_building | TEXT | nullable |
+| how_using_ai | TEXT | nullable |
+| surprise_insight | TEXT | nullable |
+| stage | TEXT | nullable |
+| product_link | TEXT | nullable |
+| takeaway | TEXT | nullable |
 | approved | BOOLEAN | default false |
 | created_at | TIMESTAMPTZ | default now() |
+
+> The legacy `title_company`, `topic_pitch`, and `social_link` columns still
+> exist for old rows but are no longer written by the form. See
+> `docs/GUEST_BRIEF.md` for how these fields map to guest casting.
 
 ### episodes
 | Column | Type | Constraints |

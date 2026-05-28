@@ -8,12 +8,11 @@ A podcast landing page and community platform featuring guest applications, news
 
 ## Features
 
-- **Hero Section**: Branded landing with podcast logo and CTAs
-- **Guest Applications**: Submit applications to be a podcast guest
-- **Newsletter Subscription**: Join The Builder Circle for updates
-- **Featured Guests**: Showcase previous podcast guests
-- **Episodes**: Display podcast episodes
-- **Testimonials**: Community testimonials
+- **Editorial Hero**: Branded landing with inline email capture
+- **Guest Applications**: 7-field form to apply as a podcast guest
+- **Email Capture**: On-page signup (Hero + Subscribe band) → welcome email
+- **Featured Guests / Episodes**: Render once approved/published rows exist
+- **Host + Guest CTA**: Bio and "be on the show" sections
 
 ---
 
@@ -113,6 +112,9 @@ All tables have RLS enabled. See `docs/ARCHITECTURE.md` for full schema.
 
 ## Documentation
 
+- [Manifesto](docs/MANIFESTO.md) - The editorial mission and worldview
+- [Guest Brief](docs/GUEST_BRIEF.md) - Casting spec (human- and AI-readable)
+- [Voice](docs/VOICE.md) - How we write copy
 - [Master Instructions](docs/MASTER_INSTRUCTIONS.md) - Development guidelines
 - [Project Notes](docs/PROJECT_NOTES.md) - Running decisions log
 - [Architecture](docs/ARCHITECTURE.md) - System architecture
