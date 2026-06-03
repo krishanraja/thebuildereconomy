@@ -33,7 +33,7 @@ export const Testimonials = () => {
     queryKey: ["testimonials"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("testimonials")
+        .from("be_testimonials")
         .select("*")
         .eq("featured", true)
         .limit(10);

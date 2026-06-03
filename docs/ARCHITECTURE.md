@@ -1,187 +1,196 @@
 # ARCHITECTURE
 
-> System architecture documentation for The Builder Economy.
+> System architecture for The Builder Economy. For *why* the show exists, read
+> [`MANIFESTO.md`](MANIFESTO.md) first — this doc is how it's wired.
+
+---
+
+## The big picture: one of several Mindmaker properties
+
+The Builder Economy is one surface in a wider Mindmaker portfolio. Several
+properties now share a single backend (the **Mindmaker AI** Supabase project,
+ref `bkyuxvschuwngtcdhsyg`) so leads and audience can be seen in one place:
+
+| Property | What it is | `source` tag |
+|----------|------------|--------------|
+| CTRL app | The leadership product | `ctrl` |
+| Mindmaker site | The marketing site | `mindmaker_site` |
+| Mindmaker Live | The Substack | `mindmaker_live` |
+| **The Builder Economy** | This podcast/site | `builder_economy` |
+
+Every email/lead lands in one shared `audience_contacts` table, tagged by
+`source`, so "where did this person come from?" is a single query. The Builder
+Economy keeps its own content in namespaced `be_*` tables that live alongside
+CTRL without touching it.
+
+> History: the backend was previously a Lovable-managed Supabase project. It was
+> consolidated into the shared Mindmaker AI project. See `PROJECT_NOTES.md`
+> (ADR-001) and `CHANGELOG.md`.
 
 ---
 
 ## Component Hierarchy
 
 ```
-App.tsx
-└── Index.tsx (main page)
-    ├── CustomCursor.tsx (hover-capable devices only)
-    ├── Header.tsx (fixed, fades on scroll)
-    ├── Hero.tsx (landing section)
-    │   └── NotifyForm.tsx (inline email capture, tone="onDark")
-    ├── MarqueeRiver.tsx (status ticker)
-    ├── About.tsx
-    ├── Host.tsx
-    ├── GuestCTA.tsx
-    ├── FeaturedGuests.tsx (renders null until approved guests exist)
-    ├── Episodes.tsx (renders null until published episodes exist)
-    ├── Testimonials.tsx (commented out until 4+ approved testimonials)
-    ├── Subscribe.tsx
-    │   └── NotifyForm.tsx (inline email capture, tone="onLight")
-    ├── Footer.tsx
-    └── GuestApplicationModal.tsx (opened from Hero + GuestCTA)
+App.tsx (BrowserRouter)
+├── Index.tsx (main page)
+│   ├── CustomCursor.tsx (hover-capable devices only)
+│   ├── Header.tsx (fixed, fades on scroll)
+│   ├── Hero.tsx
+│   │   └── NotifyForm.tsx (inline email capture, tone="onDark")
+│   ├── MarqueeRiver.tsx (status ticker)
+│   ├── About.tsx
+│   ├── Host.tsx
+│   ├── GuestCTA.tsx
+│   ├── FeaturedGuests.tsx (reads be_guests; renders null until approved guests exist)
+│   ├── Episodes.tsx (reads be_episodes; renders null until published episodes exist)
+│   ├── Testimonials.tsx (reads be_testimonials; renders null until featured rows exist)
+│   ├── Subscribe.tsx
+│   │   └── NotifyForm.tsx (inline email capture, tone="onLight")
+│   ├── Footer.tsx
+│   └── GuestApplicationModal.tsx (opened from Hero + GuestCTA)
+└── NotFound.tsx (branded catch-all; see vercel.json)
 ```
 
 `NotifyForm` is the single shared email-capture component. It writes to
-`subscribers` and fires `send-welcome-email`. The hero and the Subscribe band
-both render it, so the launch list is built on-page rather than off-site.
+`audience_contacts` (tagged `source: "builder_economy"`) and fires
+`send-welcome-email`. The hero and the Subscribe band both render it.
 
 ---
 
 ## Data Flows
 
-### Newsletter Subscription Flow
+### Newsletter subscription
 
 ```
-User enters email → NotifyForm.tsx (rendered in Hero and Subscribe)
+User enters email → NotifyForm.tsx (Hero + Subscribe)
+    ↓  zod-validated
+supabase.from("audience_contacts").insert({ email, source: "builder_economy" })
+    ↓  (unique-violation 23505 on (email, source) is treated as success)
+supabase.functions.invoke("send-welcome-email", { body: { email } })   [best-effort]
     ↓
-submit() validates email with zod
+Edge function → Resend:
+  1. Launch-honest welcome email to the subscriber (no links to unshipped content)
+  2. Internal notification to krish@themindmaker.ai (so a signup is never invisible)
     ↓
-supabase.from("subscribers").insert({ email })
-    ↓ (unique-violation 23505 is treated as success — already on the list)
-supabase.functions.invoke("send-welcome-email", { body: { email } })  [best-effort]
-    ↓
-Edge Function → Resend API → Email sent
-    ↓
-Inline success state shown in the form
+Inline success state in the form
 ```
 
-### Guest Application Flow
+### Guest application
 
 ```
-User clicks "Apply to Be a Guest" → Hero.tsx
+"Apply to Be a Guest" → GuestApplicationModal.tsx → handleSubmit()
+    ↓  zod-validated (7 fields + email)
+supabase.from("be_guest_applications").insert(formData)
     ↓
-onApplyClick() → sets modal open state
-    ↓
-GuestApplicationModal.tsx renders
-    ↓
-User fills form → handleSubmit()
-    ↓
-supabase.from("guest_applications").insert(formData)
-    ↓ (on success)
 supabase.functions.invoke("notify-guest-application", { body: formData })
     ↓
-Edge Function sends:
-  1. Admin notification email (to krish@themindmaker.ai)
+Edge function → Resend:
+  1. Admin notification (krish@themindmaker.ai)
   2. Auto-reply to applicant
     ↓
-Toast notification, modal closes
+Success state, modal closes
+```
+
+### Content reads (pre-launch: empty → sections hide themselves)
+
+```
+Episodes.tsx      → be_episodes      (is_published = true)
+FeaturedGuests.tsx → be_guests       (approved = true)
+Testimonials.tsx  → be_testimonials  (featured = true)
 ```
 
 ---
 
 ## Edge Functions
 
-### send-welcome-email
+Both run on the Mindmaker AI project with `verify_jwt = false` (public forms call
+them with the anon key) and use the project's existing `RESEND_API_KEY`.
 
+### send-welcome-email
 ```
-Request: POST { email: string }
-    ↓
-Validate email
-    ↓
-Fetch RESEND_API_KEY from env
-    ↓
-POST to api.resend.com/emails
-    ↓
-Response: { success: boolean, emailResponse: object }
+POST { email }
+  → zod-validate + in-memory rate limit
+  → Resend: welcome email to subscriber
+  → Resend: admin notification to krish@themindmaker.ai (best-effort)
+  → { success }
 ```
+Invariant: the welcome email links only to pages that exist in production.
+`scripts/check-email-links.mjs` enforces this in CI.
 
 ### notify-guest-application
-
 ```
-Request: POST GuestApplication
-    ↓
-Send admin notification email
-    ↓
-Send auto-reply to applicant
-    ↓
-Response: { success: boolean, adminEmail: object, autoReply: object }
+POST GuestApplication
+  → Resend: admin notification (full application)
+  → Resend: auto-reply to applicant
+  → { success }
 ```
 
 ---
 
-## Database Schema
+## Database Schema (Mindmaker AI · public schema)
 
-### subscribers
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | UUID | PK, default gen_random_uuid() |
-| email | TEXT | NOT NULL, UNIQUE |
-| created_at | TIMESTAMPTZ | default now() |
-
-### guest_applications
-| Column | Type | Constraints |
-|--------|------|-------------|
+### audience_contacts — shared, cross-property
+| Column | Type | Notes |
+|--------|------|-------|
 | id | UUID | PK |
-| full_name | TEXT | NOT NULL |
 | email | TEXT | NOT NULL |
-| linkedin_url | TEXT | nullable |
-| what_building | TEXT | nullable |
-| how_using_ai | TEXT | nullable |
-| surprise_insight | TEXT | nullable |
-| stage | TEXT | nullable |
-| product_link | TEXT | nullable |
-| takeaway | TEXT | nullable |
-| approved | BOOLEAN | default false |
+| source | lead_source | NOT NULL — `ctrl` / `mindmaker_site` / `mindmaker_live` / `builder_economy` |
+| name | TEXT | nullable |
+| status | TEXT | default `subscribed` |
+| metadata | JSONB | default `{}` |
 | created_at | TIMESTAMPTZ | default now() |
+| updated_at | TIMESTAMPTZ | default now() (trigger-maintained) |
+| | | UNIQUE (email, source) |
 
-> The legacy `title_company`, `topic_pitch`, and `social_link` columns still
-> exist for old rows but are no longer written by the form. See
-> `docs/GUEST_BRIEF.md` for how these fields map to guest casting.
+### be_guest_applications
+`id, full_name, email, linkedin_url, what_building, how_using_ai,
+surprise_insight, stage, product_link, takeaway, status (default 'new'),
+created_at`.
 
-### episodes
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | UUID | PK |
-| title | TEXT | NOT NULL |
-| subtitle | TEXT | nullable |
-| description | TEXT | nullable |
-| episode_url | TEXT | NOT NULL |
-| cover_image_url | TEXT | nullable |
-| guest_name | TEXT | nullable |
-| guest_title | TEXT | nullable |
-| is_published | BOOLEAN | default true |
-| published_at | TIMESTAMPTZ | nullable |
+### be_episodes
+`id, title, subtitle, guest_name, guest_title, description, episode_url,
+cover_image_url, episode_number, published_at, is_published (default true),
+created_at`.
 
-### guests
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | UUID | PK |
-| name | TEXT | NOT NULL |
-| title | TEXT | nullable |
-| photo_url | TEXT | nullable |
-| quote | TEXT | nullable |
-| episode_id | UUID | FK → episodes |
-| approved | BOOLEAN | default false |
+### be_guests
+`id, name, title, photo_url, quote, episode_id (FK → be_episodes), approved
+(default false), created_at`.
 
-### testimonials
-| Column | Type | Constraints |
-|--------|------|-------------|
-| id | UUID | PK |
-| author | TEXT | NOT NULL |
-| role | TEXT | nullable |
-| quote | TEXT | NOT NULL |
-| featured | BOOLEAN | default false |
-| created_at | TIMESTAMPTZ | default now() |
+### be_testimonials
+`id, quote, author, role, featured (default false), created_at`.
+
+> CTRL's own tables (including its separate `leads` table) are untouched. A
+> unified view over CTRL `leads` ∪ `audience_contacts` can be layered on later.
 
 ---
 
 ## Security
 
-### RLS Policies
-All tables have Row Level Security enabled:
-- **subscribers**: Public insert (for signups)
-- **guest_applications**: Public insert (for applications)
-- **episodes**: Public select (for display)
-- **guests**: Public select (for display)
-- **testimonials**: Public select (for display)
+### RLS
+All Builder Economy tables have RLS enabled:
+- **audience_contacts / be_guest_applications**: public **insert** only (anon
+  signup/apply). No public read — the contact list stays private; reads happen
+  via the service role / dashboard.
+- **be_episodes / be_guests / be_testimonials**: public **read** of
+  published/approved/featured rows only.
 
 ### Secrets
-- `RESEND_API_KEY`: Required for email functionality
+- `RESEND_API_KEY` (Supabase edge-function secret) — transactional email.
+- Front-end env (`VITE_SUPABASE_URL`, `VITE_SUPABASE_PUBLISHABLE_KEY`,
+  `VITE_SUPABASE_PROJECT_ID`) set in Vercel. The publishable/anon key is safe to
+  ship to the browser; RLS is the boundary.
+
+---
+
+## Hosting
+
+- **Front end**: Vercel, git-connected to `krishanraja/thebuildereconomy`
+  (production branch `main`), framework Vite. `vercel.json` adds an SPA rewrite
+  (deep links no longer hard-404) and a temporary `/ep/*` → `/` redirect so
+  legacy welcome-email links land softly.
+- **Backend**: Supabase (Mindmaker AI project). Edge functions deploy
+  **separately** from the site — see `RUNBOOK.md`.
 
 ---
 
@@ -192,7 +201,8 @@ All tables have Row Level Security enabled:
 | Frontend | React 18, TypeScript, Vite |
 | Styling | Tailwind CSS, shadcn/ui |
 | Animations | Framer Motion |
-| Backend | Lovable Cloud (Supabase) |
+| Hosting | Vercel |
+| Backend | Supabase (shared Mindmaker AI project) |
 | Database | PostgreSQL |
 | Edge Functions | Deno |
 | Email | Resend |

@@ -13,7 +13,7 @@ This project must behave like a world-class engineer, UX designer, and operator 
 - Model the entire pipeline, not single functions.
 - Produce 10/10 diagnostics and logging before edits.
 - Never break working flows or overwrite real assets.
-- Stay general enough to work for any codebase in Lovable.
+- Stay general enough to work for any codebase, regardless of tooling.
 
 ---
 

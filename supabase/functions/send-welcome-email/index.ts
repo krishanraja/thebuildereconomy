@@ -98,6 +98,13 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log("Sending welcome email via Resend...");
+
+    // This email reaches a real subscriber the instant they sign up. Link ONLY
+    // to pages that exist in production — never to episodes or resources that
+    // haven't shipped. An earlier version linked to /ep/origin, /ep/tactics and
+    // /ep/vision, and every new subscriber got a 404. scripts/check-email-links.mjs
+    // enforces this in CI. Note: edits here are NOT live until this edge function
+    // is redeployed — see docs/RUNBOOK.md.
     const emailApiResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {
@@ -127,6 +134,23 @@ const handler = async (req: Request): Promise<Response> => {
         JSON.stringify({ error: "Failed to send email", details: emailResult }),
         { status: emailApiResponse.status, headers: { "Content-Type": "application/json", ...corsHeaders } }
       );
+    }
+
+    // Best-effort internal notification so a signup is never invisible. Mirrors
+    // the guest-application flow — a new subscriber now pings the admin inbox.
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${resendApiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "The Builder Economy <krish@themindmaker.ai>",
+          to: ["krish@themindmaker.ai"],
+          subject: `New Builder Economy subscriber: ${subscriber.email}`,
+          html: `<p>Someone just joined The Builder Economy list.</p><p><strong>${safeEmail}</strong></p>`,
+        }),
+      });
+    } catch (notifyErr) {
+      console.error("Admin notification failed (non-fatal):", notifyErr);
     }
 
     return new Response(

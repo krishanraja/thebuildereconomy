@@ -32,7 +32,7 @@ export const Episodes = () => {
     queryKey: ["episodes"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("episodes")
+        .from("be_episodes")
         .select("*")
         .eq("is_published", true)
         .order("published_at", { ascending: false })

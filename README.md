@@ -6,6 +6,19 @@ A podcast landing page and community platform featuring guest applications, news
 
 ---
 
+## Purpose
+
+> If the Creator Economy gave everyone a voice, the Builder Economy gives
+> everyone a factory.
+
+AI has collapsed the cost of building software to near zero, so the constraint
+on entrepreneurship is no longer access — it's taste, judgment, and the
+willingness to ship. The Builder Economy is the record of that shift: every
+episode is a conversation with someone living inside it. The full editorial
+mission is in [`docs/MANIFESTO.md`](docs/MANIFESTO.md).
+
+---
+
 ## Features
 
 - **Editorial Hero**: Branded landing with inline email capture
@@ -23,7 +36,8 @@ A podcast landing page and community platform featuring guest applications, news
 | Frontend | React 18, TypeScript, Vite |
 | Styling | Tailwind CSS, shadcn/ui |
 | Animations | Framer Motion |
-| Backend | Lovable Cloud (Supabase) |
+| Hosting | Vercel |
+| Backend | Supabase (shared Mindmaker AI project) |
 | Database | PostgreSQL |
 | Edge Functions | Deno |
 | Email | Resend |
@@ -76,12 +90,13 @@ npm run dev
 
 ### Environment Variables
 
-The following are auto-configured by Lovable Cloud:
-- `VITE_SUPABASE_URL` - Supabase project URL
-- `VITE_SUPABASE_PUBLISHABLE_KEY` - Supabase anon key
+Front-end env (set in Vercel — Production, Preview, Development):
+- `VITE_SUPABASE_URL` — Supabase project URL (Mindmaker AI)
+- `VITE_SUPABASE_PUBLISHABLE_KEY` — Supabase anon/publishable key (safe in the browser; RLS is the boundary)
+- `VITE_SUPABASE_PROJECT_ID` — Supabase project ref
 
-Edge function secrets (configure in Lovable Cloud):
-- `RESEND_API_KEY` - Resend email API key
+Edge-function secret (set in the Supabase dashboard):
+- `RESEND_API_KEY` — Resend email API key
 
 ---
 
@@ -91,11 +106,11 @@ Edge function secrets (configure in Lovable Cloud):
 
 | Table | Purpose |
 |-------|---------|
-| `subscribers` | Newsletter email signups |
-| `guest_applications` | Guest application submissions |
-| `episodes` | Podcast episode data |
-| `guests` | Featured guest profiles |
-| `testimonials` | Community testimonials |
+| `audience_contacts` | Cross-property email/lead capture, tagged by `source` |
+| `be_guest_applications` | Guest application submissions |
+| `be_episodes` | Podcast episode data |
+| `be_guests` | Featured guest profiles |
+| `be_testimonials` | Community testimonials |
 
 All tables have RLS enabled. See `docs/ARCHITECTURE.md` for full schema.
 
@@ -146,9 +161,13 @@ logger.error('Failed to submit', { error: err.message });
 
 ## Deployment
 
-Deploy via Lovable:
-1. Open [Lovable Project](https://lovable.dev/projects/dc395342-a01e-4785-9d96-8010ab301bf4)
-2. Click Share → Publish
+**Front end** deploys via Vercel on push to `main` (project `thebuildereconomy`,
+git-connected to this repo). Front-end env vars live in Vercel.
+
+> **Edge functions deploy separately from the site.** Publishing the front end
+> does **not** redeploy `supabase/functions/**`. After changing an edge function
+> (e.g. `send-welcome-email`), redeploy it explicitly or production keeps running
+> the old version. See [`docs/RUNBOOK.md`](docs/RUNBOOK.md).
 
 ---
 
