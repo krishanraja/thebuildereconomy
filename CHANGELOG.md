@@ -9,6 +9,13 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 ## [Unreleased]
 
 ### Added
+- Backend consolidation migration
+  (`supabase/migrations/20260603120000_audience_contacts_and_be_guest_applications.sql`):
+  a cross-property `lead_source` enum (`ctrl`, `mindmaker_site`, `mindmaker_live`,
+  `builder_economy`), a unified `audience_contacts` table, and `be_guest_applications`.
+  Applied additively to the shared Mindmaker AI Supabase project as the first step of
+  moving Builder Economy off the Lovable-managed project. No existing CTRL object is
+  altered. (Edge functions + front-end repoint to follow.)
 - Editorial mission doc (`docs/MANIFESTO.md`) and guest casting spec
   (`docs/GUEST_BRIEF.md`), the latter written for human bookers and AI sourcing
   agents (archetypes, inclusion criteria, disqualifiers, scoring rubric, JSON
