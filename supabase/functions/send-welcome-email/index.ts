@@ -98,6 +98,13 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     console.log("Sending welcome email via Resend...");
+
+    // This email reaches a real subscriber the instant they sign up. Link ONLY
+    // to pages that exist in production — never to episodes or resources that
+    // haven't shipped. An earlier version linked to /ep/origin, /ep/tactics and
+    // /ep/vision, and every new subscriber got a 404. scripts/check-email-links.mjs
+    // enforces this in CI. Note: edits here are NOT live until this edge function
+    // is redeployed — see docs/RUNBOOK.md.
     const emailApiResponse = await fetch("https://api.resend.com/emails", {
       method: "POST",
       headers: {

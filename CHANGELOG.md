@@ -40,6 +40,22 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - Updated Hero tagline: `text-lg` on mobile, `text-3xl` on desktop
 - Added controlled line breaks for mobile tagline
 
+### Fixed
+- Welcome email no longer links to episode pages that don't exist. The live edge
+  function was still sending the pre-launch email (links to `/ep/origin`,
+  `/ep/tactics`, `/ep/vision`), so every new subscriber hit a 404 — deploy drift
+  between the repo and the deployed function. Hardened against recurrence (below)
+  and documented the edge-function redeploy step.
+
+### Added (tooling / safety nets)
+- `scripts/check-email-links.mjs` + CI (`.github/workflows/ci.yml`): fails the
+  build if any email links to a non-existent internal page
+- `vercel.json`: SPA rewrite so deep links stop hard-404ing, plus a temporary
+  `/ep/*` → `/` redirect so links already sent in welcome emails land on the home
+  page instead of a raw host 404
+- On-brand 404 page (`src/pages/NotFound.tsx`)
+- Operational runbook (`docs/RUNBOOK.md`)
+
 ---
 
 ## [1.0.0] - 2025-12-09

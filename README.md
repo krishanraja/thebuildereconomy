@@ -150,6 +150,11 @@ Deploy via Lovable:
 1. Open [Lovable Project](https://lovable.dev/projects/dc395342-a01e-4785-9d96-8010ab301bf4)
 2. Click Share → Publish
 
+> **Edge functions deploy separately from the site.** Publishing the front end
+> does **not** redeploy `supabase/functions/**`. After changing an edge function
+> (e.g. `send-welcome-email`), redeploy it explicitly or production keeps running
+> the old version. See [`docs/RUNBOOK.md`](docs/RUNBOOK.md).
+
 ---
 
 ## License
