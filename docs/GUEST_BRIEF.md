@@ -143,7 +143,7 @@ Search these, with example queries:
 - **Reddit:** r/SideProject, r/indiehackers, r/SaaS launch posts with traction.
 - **GitHub:** trending solo-maintainer projects that are AI-native and have real usage.
 - **YouTube / TikTok:** builders demoing real products (not just tutorials).
-- **The inbound pile:** the `guest_applications` table. Score these the same way.
+- **The inbound pile:** the `be_guest_applications` table. Score these the same way.
 
 Prioritise people who are *not* already on every podcast. The quiet compounder
 beats the person who has told this story ten times.
@@ -168,7 +168,7 @@ Any disqualifier zeroes the candidate.
 
 ### Mapping the application form to the rubric
 
-When scoring an inbound `guest_applications` row, the fields map like this:
+When scoring an inbound `be_guest_applications` row, the fields map like this:
 
 - `what_building` + `product_link` -> **Realness**
 - `how_using_ai` -> **AI-native**

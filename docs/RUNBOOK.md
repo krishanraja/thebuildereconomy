@@ -48,17 +48,17 @@ Operational notes for keeping The Builder Economy healthy. Short and practical.
 does **not** ship `supabase/functions/**`. This is the gap that caused the
 incident above.
 
-- **Front end / `vercel.json`:** deploys with the site (Lovable Publish, or the
-  connected Vercel/GitHub deploy).
+- **Front end / `vercel.json`:** deploys via Vercel on push to `main`.
 - **Edge functions (`send-welcome-email`, `notify-guest-application`):** must be
-  deployed to Supabase explicitly after any change:
+  deployed to Supabase (project Mindmaker AI, ref `bkyuxvschuwngtcdhsyg`)
+  explicitly after any change:
 
   ```bash
-  supabase functions deploy send-welcome-email
-  supabase functions deploy notify-guest-application
+  supabase functions deploy send-welcome-email     --project-ref bkyuxvschuwngtcdhsyg
+  supabase functions deploy notify-guest-application --project-ref bkyuxvschuwngtcdhsyg
   ```
 
-  (Or redeploy functions from the Lovable Cloud / Supabase dashboard.)
+  (Or redeploy from the Supabase dashboard for the Mindmaker AI project.)
 
 After editing anything under `supabase/functions/**`, redeploy and then verify
 by sending yourself a real signup.

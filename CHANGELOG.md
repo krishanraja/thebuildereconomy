@@ -15,7 +15,11 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
   `builder_economy`), a unified `audience_contacts` table, and `be_guest_applications`.
   Applied additively to the shared Mindmaker AI Supabase project as the first step of
   moving Builder Economy off the Lovable-managed project. No existing CTRL object is
-  altered. (Edge functions + front-end repoint to follow.)
+  altered.
+- Builder Economy content tables `be_episodes` / `be_guests` / `be_testimonials`
+  (`supabase/migrations/20260603130000_be_content_tables.sql`), public-read.
+- Admin notification on newsletter signup (in `send-welcome-email`) so a new
+  subscriber is never invisible.
 - Editorial mission doc (`docs/MANIFESTO.md`) and guest casting spec
   (`docs/GUEST_BRIEF.md`), the latter written for human bookers and AI sourcing
   agents (archetypes, inclusion criteria, disqualifiers, scoring rubric, JSON
@@ -33,6 +37,9 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/).
 - File header documentation to key components
 
 ### Changed
+- Repointed Builder Economy to the shared Mindmaker AI Supabase project: the
+  front end reads/writes the consolidated `audience_contacts` + `be_*` schema,
+  both edge functions run on Mindmaker AI, and Vercel env points there
 - Hero primary CTA is now on-page email capture instead of an off-site link
 - Rebuilt the unused, off-voice Subscribe section as an on-brand closing band
   that uses NotifyForm
