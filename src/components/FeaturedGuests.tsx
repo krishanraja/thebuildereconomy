@@ -29,7 +29,7 @@ export const FeaturedGuests = () => {
     queryKey: ["featured-guests"],
     queryFn: async () => {
       const { data, error } = await supabase
-        .from("guests")
+        .from("be_guests")
         .select("*")
         .eq("approved", true)
         .limit(8);

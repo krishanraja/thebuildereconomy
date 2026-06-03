@@ -53,7 +53,9 @@ export const NotifyForm = ({
     setMessage("");
 
     try {
-      const { error } = await supabase.from("subscribers").insert({ email: parsed.data });
+      const { error } = await supabase
+        .from("audience_contacts")
+        .insert({ email: parsed.data, source: "builder_economy" });
       // 23505 = unique violation. Already on the list, which is a success for the user.
       if (error && error.code !== "23505") throw error;
 

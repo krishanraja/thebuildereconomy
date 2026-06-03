@@ -14,102 +14,133 @@ export type Database = {
   }
   public: {
     Tables: {
-      episodes: {
+      audience_contacts: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          metadata: Json
+          name: string | null
+          source: Database["public"]["Enums"]["lead_source"]
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          metadata?: Json
+          name?: string | null
+          source: Database["public"]["Enums"]["lead_source"]
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          metadata?: Json
+          name?: string | null
+          source?: Database["public"]["Enums"]["lead_source"]
+          status?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      be_episodes: {
         Row: {
           cover_image_url: string | null
+          created_at: string
           description: string | null
+          episode_number: number | null
           episode_url: string
           guest_name: string | null
           guest_title: string | null
           id: string
-          is_published: boolean | null
+          is_published: boolean
           published_at: string | null
           subtitle: string | null
           title: string
         }
         Insert: {
           cover_image_url?: string | null
+          created_at?: string
           description?: string | null
+          episode_number?: number | null
           episode_url: string
           guest_name?: string | null
           guest_title?: string | null
           id?: string
-          is_published?: boolean | null
+          is_published?: boolean
           published_at?: string | null
           subtitle?: string | null
           title: string
         }
         Update: {
           cover_image_url?: string | null
+          created_at?: string
           description?: string | null
+          episode_number?: number | null
           episode_url?: string
           guest_name?: string | null
           guest_title?: string | null
           id?: string
-          is_published?: boolean | null
+          is_published?: boolean
           published_at?: string | null
           subtitle?: string | null
           title?: string
         }
         Relationships: []
       }
-      guest_applications: {
+      be_guest_applications: {
         Row: {
-          approved: boolean | null
-          created_at: string | null
+          created_at: string
           email: string
           full_name: string
           how_using_ai: string | null
           id: string
           linkedin_url: string | null
           product_link: string | null
-          social_link: string | null
           stage: string | null
+          status: string
           surprise_insight: string | null
           takeaway: string | null
-          title_company: string | null
-          topic_pitch: string | null
           what_building: string | null
         }
         Insert: {
-          approved?: boolean | null
-          created_at?: string | null
+          created_at?: string
           email: string
           full_name: string
           how_using_ai?: string | null
           id?: string
           linkedin_url?: string | null
           product_link?: string | null
-          social_link?: string | null
           stage?: string | null
+          status?: string
           surprise_insight?: string | null
           takeaway?: string | null
-          title_company?: string | null
-          topic_pitch?: string | null
           what_building?: string | null
         }
         Update: {
-          approved?: boolean | null
-          created_at?: string | null
+          created_at?: string
           email?: string
           full_name?: string
           how_using_ai?: string | null
           id?: string
           linkedin_url?: string | null
           product_link?: string | null
-          social_link?: string | null
           stage?: string | null
+          status?: string
           surprise_insight?: string | null
           takeaway?: string | null
-          title_company?: string | null
-          topic_pitch?: string | null
           what_building?: string | null
         }
         Relationships: []
       }
-      guests: {
+      be_guests: {
         Row: {
-          approved: boolean | null
+          approved: boolean
+          created_at: string
           episode_id: string | null
           id: string
           name: string
@@ -118,7 +149,8 @@ export type Database = {
           title: string | null
         }
         Insert: {
-          approved?: boolean | null
+          approved?: boolean
+          created_at?: string
           episode_id?: string | null
           id?: string
           name: string
@@ -127,7 +159,8 @@ export type Database = {
           title?: string | null
         }
         Update: {
-          approved?: boolean | null
+          approved?: boolean
+          created_at?: string
           episode_id?: string | null
           id?: string
           name?: string
@@ -137,53 +170,35 @@ export type Database = {
         }
         Relationships: [
           {
-            foreignKeyName: "guests_episode_id_fkey"
+            foreignKeyName: "be_guests_episode_id_fkey"
             columns: ["episode_id"]
             isOneToOne: false
-            referencedRelation: "episodes"
+            referencedRelation: "be_episodes"
             referencedColumns: ["id"]
           },
         ]
       }
-      subscribers: {
-        Row: {
-          created_at: string | null
-          email: string
-          id: string
-        }
-        Insert: {
-          created_at?: string | null
-          email: string
-          id?: string
-        }
-        Update: {
-          created_at?: string | null
-          email?: string
-          id?: string
-        }
-        Relationships: []
-      }
-      testimonials: {
+      be_testimonials: {
         Row: {
           author: string
-          created_at: string | null
-          featured: boolean | null
+          created_at: string
+          featured: boolean
           id: string
           quote: string
           role: string | null
         }
         Insert: {
           author: string
-          created_at?: string | null
-          featured?: boolean | null
+          created_at?: string
+          featured?: boolean
           id?: string
           quote: string
           role?: string | null
         }
         Update: {
           author?: string
-          created_at?: string | null
-          featured?: boolean | null
+          created_at?: string
+          featured?: boolean
           id?: string
           quote?: string
           role?: string | null
@@ -198,7 +213,7 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      lead_source: "ctrl" | "mindmaker_site" | "mindmaker_live" | "builder_economy"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -325,6 +340,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      lead_source: ["ctrl", "mindmaker_site", "mindmaker_live", "builder_economy"],
+    },
   },
 } as const

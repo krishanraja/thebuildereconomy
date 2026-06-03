@@ -63,7 +63,7 @@ export const config = {
    * Email configuration
    */
   email: {
-    fromAddress: 'The Builder Economy <onboarding@resend.dev>',
+    fromAddress: 'The Builder Economy <krish@themindmaker.ai>',
     senderName: 'Krish Raja',
   },
 } as const;

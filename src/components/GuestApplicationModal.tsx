@@ -110,7 +110,7 @@ export const GuestApplicationModal = ({ open, onOpenChange }: GuestApplicationMo
     setLoading(true);
     try {
       const d = validation.data;
-      const { error } = await supabase.from("guest_applications").insert({
+      const { error } = await supabase.from("be_guest_applications").insert({
         full_name: d.full_name,
         email: d.email,
         linkedin_url: d.linkedin_url || null,

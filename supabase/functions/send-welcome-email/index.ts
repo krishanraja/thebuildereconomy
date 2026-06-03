@@ -136,6 +136,23 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Best-effort internal notification so a signup is never invisible. Mirrors
+    // the guest-application flow — a new subscriber now pings the admin inbox.
+    try {
+      await fetch("https://api.resend.com/emails", {
+        method: "POST",
+        headers: { "Authorization": `Bearer ${resendApiKey}`, "Content-Type": "application/json" },
+        body: JSON.stringify({
+          from: "The Builder Economy <krish@themindmaker.ai>",
+          to: ["krish@themindmaker.ai"],
+          subject: `New Builder Economy subscriber: ${subscriber.email}`,
+          html: `<p>Someone just joined The Builder Economy list.</p><p><strong>${safeEmail}</strong></p>`,
+        }),
+      });
+    } catch (notifyErr) {
+      console.error("Admin notification failed (non-fatal):", notifyErr);
+    }
+
     return new Response(
       JSON.stringify({ success: true, emailResponse: emailResult }),
       { status: 200, headers: { "Content-Type": "application/json", ...corsHeaders } }

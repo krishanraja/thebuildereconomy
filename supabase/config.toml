@@ -1,4 +1,4 @@
-project_id = "eanxwzgbqqyjqplkalnl"
+project_id = "bkyuxvschuwngtcdhsyg"
 
 [functions.notify-guest-application]
 verify_jwt = false
